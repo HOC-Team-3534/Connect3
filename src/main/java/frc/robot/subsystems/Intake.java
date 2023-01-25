@@ -11,16 +11,9 @@ public class Intake extends BaseSubsystem<IntakeState> {
     WPI_TalonSRX topMotor;
     WPI_TalonSRX botMotor;
 
-    public Intake(IntakeState neutralState) {
-        super(neutralState);
+    public Intake() {
+        super(IntakeState.NEUTRAL);
         // TODO Auto-generated constructor stub
-    }
-
-    @Override
-    public void neutral() {
-        // set all the motors to 0 movement(Josh took a guess on how to do it on all of them)
-        topMotor.set(ControlMode.PercentOutput, 0.0);
-        botMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
     public void intake() {
@@ -31,6 +24,12 @@ public class Intake extends BaseSubsystem<IntakeState> {
     public void extake() {
         topMotor.set(ControlMode.PercentOutput, -0.75);
         botMotor.set(ControlMode.PercentOutput, -0.75);
+    }
+
+    @Override
+    public void neutral() {
+        topMotor.set(ControlMode.PercentOutput, 0.0);
+        botMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
     @Override

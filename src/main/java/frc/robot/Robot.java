@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     swerveDrive = new SwerveDrive();
+    intake = new Intake();
     sequenceProcessor = new SequenceProcessor();
   }
 
@@ -76,6 +77,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     swerveDrive.forceRelease();
+    intake.forceRelease();
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -100,6 +102,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     swerveDrive.forceRelease();
+    intake.forceRelease();
   }
 
   /** This function is called periodically during operator control. */
@@ -115,6 +118,7 @@ public class Robot extends TimedRobot {
       // run processes
       /** Run subsystem process methods here */
       swerveDrive.process();
+      intake.process();
     }
     Timer.delay(0.001);
   }
@@ -123,6 +127,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     swerveDrive.forceRelease();
+    intake.forceRelease();
   }
 
   /** This function is called periodically when disabled. */

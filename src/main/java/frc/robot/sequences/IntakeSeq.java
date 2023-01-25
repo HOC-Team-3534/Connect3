@@ -24,9 +24,9 @@ enum IntakeSeqPhase implements ISequencePhase {
     }
 }
 
-public class IntakeSeq extends BaseSequence {
+public class IntakeSeq extends BaseSequence<IntakeSeqPhase> {
 
-    public IntakeSeq(ISequencePhase neutralPhase, ISequencePhase startPhase) {
+    public IntakeSeq(IntakeSeqPhase neutralPhase, IntakeSeqPhase startPhase) {
         super(neutralPhase, startPhase);
         //TODO Auto-generated constructor stub
     }

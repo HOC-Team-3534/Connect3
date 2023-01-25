@@ -9,12 +9,12 @@ public class SequenceProcessor {
     public static FlipperSeq flipper;
     public static GyroReset gyroReset;
     public static SusanSeq susan;
-    public static IntakeSeqPhase intakeSeq;
+    public static IntakeSeq intakeSeq;
 
 
     public SequenceProcessor() {
         drive = new Drive(DrivePhase.NEUTRAL, DrivePhase.DRIVE);
-        intakeSeq = new IntakeSeqPhase(IntakeState.NEUTRAL,IntakeState.INTAKE,IntakeState.EXTAKE);
+        intakeSeq = new IntakeSeq(IntakeSeqPhase.NEUTRAL,IntakeSeqPhase.NEUTRAL);
     }
 
     public static void process() {

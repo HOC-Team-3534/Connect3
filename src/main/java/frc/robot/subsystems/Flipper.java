@@ -21,4 +21,12 @@ public class Flipper extends BaseSubsystem<FlipperState>{
         // TODO Auto-generated method stub
         return false;
     }
+
+    public Object flip() {
+        return null;
+    }
+
+    public Object unflip() {
+        return null;
+    }
 }
