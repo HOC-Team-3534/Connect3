@@ -48,6 +48,8 @@ public class SequenceProcessor {
                     break;
             }
         }
-        drive.process();
+        // drive.process();
+        driveCharacterization.process();
+        steerCharacterization.process();
     }
 }
