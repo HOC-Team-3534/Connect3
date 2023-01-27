@@ -114,11 +114,11 @@ public class Robot extends TimedRobot {
       loopPeriod = (int) (currentTime - prevLoopTime);
       prevLoopTime = currentTime;
       loopCnt++;
-      ((ISubsystem) sequenceProcessor).process();
+      sequenceProcessor.process();
       // run processes
       /** Run subsystem process methods here */
-      swerveDrive.process();
-      intake.process();
+      // swerveDrive.process();
+      // intake.process();
     }
     Timer.delay(0.001);
   }
@@ -133,6 +133,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
+    log();
+    swerveDrive.process();
   }
 
   /** This function is called once when test mode is enabled. */
@@ -158,6 +160,8 @@ public class Robot extends TimedRobot {
   private void log() {
     logCounter++;
     if (logCounter > 5) {
+      SmartDashboard.putNumber("Gyro Heading from Drivetrain Model", swerveDrive.getGyroRotation().getDegrees());
+      SmartDashboard.putNumber("CANCoder FL Rotation", swerveDrive.getDrivetrainModel().getModulePositions()[0].angle.getDegrees());
       logCounter = 0;
     }
   }

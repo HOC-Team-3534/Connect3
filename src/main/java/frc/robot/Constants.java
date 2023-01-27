@@ -71,6 +71,16 @@ public final class Constants {
                                                                                                       1,
                                                                                                       0.5);
             public static final int PIGEON2_ID = 13;
+
+            public static final class SteerCharacterization {
+                public static final double QUASIASTIC_VOLTAGE = 0.25; // voltage per second increase
+                public static final double QUASIASTIC_DURATION = 15.0; // duration of test seconds
+            }
+
+            public static final class DriveCharacterization {
+                public static final double QUASIASTIC_VOLTAGE = 0.75; // voltage per second increase
+                public static final double QUASIASTIC_DURATION = 5.0; // duration of test seconds
+            }
         }
 
         public static final class ROBOT {

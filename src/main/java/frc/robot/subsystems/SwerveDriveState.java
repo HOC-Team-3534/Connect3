@@ -15,6 +15,14 @@ public enum SwerveDriveState implements ISubsystemState<SwerveDrive> {
         } else {
             s.drive();
         }
+    }),
+    CHARACTERIZE_STEER((s) -> s.characterizeSteer()),
+    CHARACTERIZE_DRIVE((s) -> s.characterizeDrive()),
+    COMPLETED_CHARACTERIZATION((s) -> {
+        s.neutral();
+        if (s.getStateFirstRunThrough()) {
+            s.printData();
+        }
     });
 
     SubsystemState<SwerveDrive> state;
