@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
       sequenceProcessor.process();
       // run processes
       /** Run subsystem process methods here */
-      // swerveDrive.process();
+      swerveDrive.process();
       // intake.process();
     }
     Timer.delay(0.001);
@@ -162,6 +162,7 @@ public class Robot extends TimedRobot {
     if (logCounter > 5) {
       SmartDashboard.putNumber("Gyro Heading from Drivetrain Model", swerveDrive.getGyroRotation().getDegrees());
       SmartDashboard.putNumber("CANCoder FL Rotation", swerveDrive.getDrivetrainModel().getModulePositions()[0].angle.getDegrees());
+      SmartDashboard.putNumber("CANCoder FL Absolute Position", swerveDrive.getFLAbsoluteRotation2d().getDegrees());
       logCounter = 0;
     }
   }

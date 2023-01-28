@@ -39,7 +39,7 @@ public class SteerCharacterization extends BaseSequence<SteerCharacterizationPha
     public void process() {
         switch (getPhase()) {
             case STEER:
-                if (getTimeSinceStartOfPhase() > DRIVE.Config.SteerCharacterization.QUASIASTIC_DURATION
+                if (getTimeSinceStartOfPhase() > DRIVE.Config.SteerCharacterization.QUASIASTIC_DURATION * 1000
                     || Buttons.CancelCharacterize.getButton()) {
                     setNextPhase(SteerCharacterizationPhase.COMPLETED);
                 }

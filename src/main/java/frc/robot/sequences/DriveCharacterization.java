@@ -39,7 +39,7 @@ public class DriveCharacterization extends BaseSequence<DriveCharacterizationPha
     public void process() {
         switch (getPhase()) {
             case DRIVE:
-                if (getTimeSinceStartOfPhase() > DRIVE.Config.DriveCharacterization.QUASIASTIC_DURATION
+                if (getTimeSinceStartOfPhase() > DRIVE.Config.DriveCharacterization.QUASIASTIC_DURATION * 1000
                     || Buttons.CancelCharacterize.getButton()) {
                     setNextPhase(DriveCharacterizationPhase.COMPLETED);
                 }

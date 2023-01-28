@@ -22,28 +22,28 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
     final static SwerveModule fl = new SwerveModule(Known.SDS_MODULE_CONFIGURATION,
                                                     Config.SWERVE_MODULE_TUNINGS, FL_drive,
                                                     FL_steer, FL_cancoder,
-                                                    Rotation2d.fromDegrees(1.32));
+                                                    Rotation2d.fromDegrees(1.76));
     final static WPI_TalonFX FR_drive = new WPI_TalonFX(4);
     final static WPI_TalonFX FR_steer = new WPI_TalonFX(6);
     final static CANCoder FR_cancoder = new CANCoder(5);
     final static SwerveModule fr = new SwerveModule(Known.SDS_MODULE_CONFIGURATION,
                                                     Config.SWERVE_MODULE_TUNINGS, FR_drive,
                                                     FR_steer, FR_cancoder,
-                                                    Rotation2d.fromDegrees(11.25));
+                                                    Rotation2d.fromDegrees(13.09));
     final static WPI_TalonFX BL_drive = new WPI_TalonFX(7);
     final static WPI_TalonFX BL_steer = new WPI_TalonFX(9);
     final static CANCoder BL_cancoder = new CANCoder(8);
     final static SwerveModule bl = new SwerveModule(Known.SDS_MODULE_CONFIGURATION,
                                                     Config.SWERVE_MODULE_TUNINGS, BL_drive,
                                                     BL_steer, BL_cancoder,
-                                                    Rotation2d.fromDegrees(1.93));
+                                                    Rotation2d.fromDegrees(2.46));
     final static WPI_TalonFX BR_drive = new WPI_TalonFX(10);
     final static WPI_TalonFX BR_steer = new WPI_TalonFX(12);
     final static CANCoder BR_cancoder = new CANCoder(11);
     final static SwerveModule br = new SwerveModule(Known.SDS_MODULE_CONFIGURATION,
                                                     Config.SWERVE_MODULE_TUNINGS, BR_drive,
                                                     BR_steer, BR_cancoder,
-                                                    Rotation2d.fromDegrees(3.96));
+                                                    Rotation2d.fromDegrees(4.92));
     final static WPI_Pigeon2 pigeon2 = new WPI_Pigeon2(Config.PIGEON2_ID);
     final static SwerveDrivetrainModel dt = new SwerveDrivetrainModel(fl, fr, bl, br, pigeon2,
                                                                       Calculated.KINEMATICS,
@@ -53,6 +53,10 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
     public SwerveDrive() {
         super(dt, Calculated.KINEMATICS, SwerveDriveState.NEUTRAL);
         // TODO Auto-generated constructor stub
+    }
+
+    public Rotation2d getFLAbsoluteRotation2d() {
+        return Rotation2d.fromDegrees(FL_cancoder.getAbsolutePosition());
     }
 
     protected void drive() {
@@ -71,14 +75,14 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
         if (getStateFirstRunThrough()) {
             characterizeSteerInit();
         }
-        characterizeSteer(getSequenceRequiring().getTimeSinceStartOfPhase() * DRIVE.Config.SteerCharacterization.QUASIASTIC_VOLTAGE);
+        characterizeSteer((double) getSequenceRequiring().getTimeSinceStartOfPhase() / 1000.0 * DRIVE.Config.SteerCharacterization.QUASIASTIC_VOLTAGE);
     }
 
     protected void characterizeDrive() {
         if (getStateFirstRunThrough()) {
             characterizeDriveInit();
         }
-        characterizeDrive(getSequenceRequiring().getTimeSinceStartOfPhase() * DRIVE.Config.DriveCharacterization.QUASIASTIC_VOLTAGE);
+        characterizeDrive((double) getSequenceRequiring().getTimeSinceStartOfPhase() / 1000.0 * DRIVE.Config.DriveCharacterization.QUASIASTIC_VOLTAGE);
     }
 
     @Override

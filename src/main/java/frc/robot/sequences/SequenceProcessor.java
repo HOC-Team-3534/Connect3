@@ -2,6 +2,7 @@ package frc.robot.sequences;
 
 import frc.robot.subsystems.IntakeState;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotContainer.Buttons;
 import frc.robot.sequences.IntakeSeq;
 
@@ -30,26 +31,21 @@ public class SequenceProcessor {
                                                           DriveCharacterizationPhase.DRIVE);
         steerOrDrive.setDefaultOption("Steer Characterization", Characterization.Steer);
         steerOrDrive.addOption("Drive Characterization", Characterization.Drive);
+        SmartDashboard.putData(steerOrDrive);
     }
 
     public void process() {
-        // drive.start();
-        if (Buttons.Characterize.getButton()) {
-            switch (steerOrDrive.getSelected()) {
-                case Drive:
-                    driveCharacterization.start();
-                    break;
-
-                case Steer:
-                    steerCharacterization.start();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-        // drive.process();
-        driveCharacterization.process();
-        steerCharacterization.process();
+        drive.start();
+        /*
+         * if (Buttons.Characterize.getButton()) { switch (steerOrDrive.getSelected()) {
+         * case Drive: driveCharacterization.start(); break;
+         * 
+         * case Steer: steerCharacterization.start(); break;
+         * 
+         * default: break; } }
+         */
+        drive.process();
+        // driveCharacterization.process();
+        // steerCharacterization.process();
     }
 }

@@ -64,22 +64,22 @@ public final class Constants {
             public static final SwerveModule.Tunings SWERVE_MODULE_TUNINGS = new SwerveModule.Tunings(Calculated.MAX_FWD_REV_SPEED_MPS_EST,
                                                                                                       Calculated.MAX_ROTATE_SPEED_RAD_PER_SEC_MOTOR_EST,
                                                                                                       2 * Math.PI,
-                                                                                                      1,
-                                                                                                      1,
-                                                                                                      3,
-                                                                                                      1,
-                                                                                                      1,
-                                                                                                      0.5);
+                                                                                                      0.1,
+                                                                                                      -0.04,
+                                                                                                      1.0 / 0.434,
+                                                                                                      1.0,
+                                                                                                      -0.756,
+                                                                                                      1.0 / 4.7);
             public static final int PIGEON2_ID = 13;
 
             public static final class SteerCharacterization {
-                public static final double QUASIASTIC_VOLTAGE = 0.25; // voltage per second increase
-                public static final double QUASIASTIC_DURATION = 15.0; // duration of test seconds
+                public static final double QUASIASTIC_VOLTAGE = 0.5; // voltage per second increase
+                public static final double QUASIASTIC_DURATION = 24.0; // duration of test seconds
             }
 
             public static final class DriveCharacterization {
                 public static final double QUASIASTIC_VOLTAGE = 0.75; // voltage per second increase
-                public static final double QUASIASTIC_DURATION = 5.0; // duration of test seconds
+                public static final double QUASIASTIC_DURATION = 10.0; // duration of test seconds
             }
         }
 

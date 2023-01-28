@@ -59,7 +59,7 @@ public class RobotContainer {
         Creep(() -> getController1().getLeftTriggerAxis() > 0.15),
         Intake(() -> getController1().getRightBumper()),
         Extake(() -> getController1().getLeftBumper()), // Subject to Change
-        Characterize(() -> getController1().getStartButton()),
+        Characterize(() -> getController1().getAButton()),
         CancelCharacterize(() -> getController1().getBButton());
 
         Callable<Boolean> callable;
