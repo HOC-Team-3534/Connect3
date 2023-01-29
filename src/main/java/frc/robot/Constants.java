@@ -4,8 +4,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.statebasedcontroller.subsystem.general.swervedrive.swervelib.SDSModuleConfiguration;
-import frc.statebasedcontroller.subsystem.general.swervedrive.swervelib.SwerveDrivetrainModel;
-import frc.statebasedcontroller.subsystem.general.swervedrive.swervelib.SwerveModule;
 
 public final class Constants {
     public static RobotType ROBOTTYPE = RobotType.CBOT;

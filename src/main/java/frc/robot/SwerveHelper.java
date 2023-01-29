@@ -14,6 +14,7 @@ public class SwerveHelper {
                                                         0.1, -0.04, 1.0 / 0.434,
                                                         0, 10.0, 10.0, 1, 1,
                                                         0.25, 0.25);
+        SwerveConstants.createSwerveConstants();
         return true;
     }
 }
