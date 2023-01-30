@@ -60,7 +60,13 @@ public class RobotContainer {
         Intake(() -> getController1().getRightBumper()),
         Extake(() -> getController1().getLeftBumper()), // Subject to Change
         Characterize(() -> getController1().getAButton()),
-        CancelCharacterize(() -> getController1().getBButton());
+        CancelCharacterize(() -> getController1().getBButton()),
+        DTM(() -> getController1().getRightTriggerAxis() > 0.15),
+        CUBE(() -> getController2().getRightTriggerAxis() > 0.15), // Sets color to violet
+                                                                   // indicating cube to be picked
+                                                                   // up
+        CONE(() -> getController2().getLeftTriggerAxis() > 0.15);// Sets color to yellow indicating
+                                                                 // cone to be picked up
 
         Callable<Boolean> callable;
 

@@ -2,11 +2,14 @@ package frc.robot.extras;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Robot;
 
 import java.util.function.Function;
+
+import javax.swing.TransferHandler.TransferSupport;
 
 public class Limelight {
 	Function<Double, Double> distanceFunction;
@@ -16,6 +19,12 @@ public class Limelight {
 	boolean isTargetAcquired;
 	double savedDistance = -999;
 	double savedTX = 0;
+	// Change what variable it is set too as double doens't make sense for botpose
+	// to be a double. Also shouldn't instanciate them here probably also need to
+	// constantly update them throughout the running of the bot
+	double botPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("<botpose>").getDouble(0);
+	double savedTL = NetworkTableInstance.getDefault().getTable("limelight").getEntry("<tl>").getDouble(0);
+	double aprilTagID = NetworkTableInstance.getDefault().getTable("limelight").getEntry("<tid>").getDouble(0);
 	long lastTimeTableSet = 0;
 	LimelightShootProjection limelightShootProjection;
 
