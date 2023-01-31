@@ -17,7 +17,6 @@ enum IntakeSeqPhase implements ISequencePhase {
         phase = new SequencePhase(states);
     }
 
-
     @Override
     public SequencePhase getPhase() {
         return phase;
@@ -25,16 +24,14 @@ enum IntakeSeqPhase implements ISequencePhase {
 }
 
 public class IntakeSeq extends BaseSequence<IntakeSeqPhase> {
-
     public IntakeSeq(IntakeSeqPhase neutralPhase, IntakeSeqPhase startPhase) {
         super(neutralPhase, startPhase);
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     @Override
     public void process() {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
@@ -42,5 +39,4 @@ public class IntakeSeq extends BaseSequence<IntakeSeqPhase> {
         // TODO Auto-generated method stub
         return false;
     }
-    
 }

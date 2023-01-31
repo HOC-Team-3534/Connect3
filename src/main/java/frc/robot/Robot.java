@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.sequences.SequenceProcessor;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Intake;
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
   public static Susan susan;
   public static Flipper flipper;
   public static Elevator elevator;
+  public static Blinkin state;
   private int loopCnt, loopPeriod, logCounter;
   private long prevLoopTime = 0;
 
@@ -53,8 +55,8 @@ public class Robot extends TimedRobot {
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items
-   * like diagnostics that you want ran during disabled, autonomous, teleoperated
-   * and test.
+   * like diagnostics that you want ran during disabled, autonomous,
+   * teleoperated and test.
    * <p>
    * This runs after the mode specific periodic functions, but before LiveWindow
    * and SmartDashboard integrated updating.
@@ -65,14 +67,14 @@ public class Robot extends TimedRobot {
 
   /**
    * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable chooser
-   * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-   * remove all of the chooser code and uncomment the getString line to get the
-   * auto name from the text box below the Gyro
+   * between different autonomous modes using the dashboard. The sendable
+   * chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
+   * Dashboard, remove all of the chooser code and uncomment the getString line
+   * to get the auto name from the text box below the Gyro
    * <p>
    * You can add additional auto modes by adding additional comparisons to the
-   * switch structure below with additional strings. If using the SendableChooser
-   * make sure to add them to the chooser code above as well.
+   * switch structure below with additional strings. If using the
+   * SendableChooser make sure to add them to the chooser code above as well.
    */
   @Override
   public void autonomousInit() {
@@ -160,9 +162,12 @@ public class Robot extends TimedRobot {
   private void log() {
     logCounter++;
     if (logCounter > 5) {
-      SmartDashboard.putNumber("Gyro Heading from Drivetrain Model", swerveDrive.getGyroRotation().getDegrees());
-      SmartDashboard.putNumber("CANCoder FL Rotation", swerveDrive.getDrivetrainModel().getModulePositions()[0].angle.getDegrees());
-      SmartDashboard.putNumber("CANCoder FL Absolute Position", swerveDrive.getFLAbsoluteRotation2d().getDegrees());
+      SmartDashboard.putNumber("Gyro Heading from Drivetrain Model",
+                               swerveDrive.getGyroRotation().getDegrees());
+      SmartDashboard.putNumber("CANCoder FL Rotation",
+                               swerveDrive.getDrivetrainModel().getModulePositions()[0].angle.getDegrees());
+      SmartDashboard.putNumber("CANCoder FL Absolute Position",
+                               swerveDrive.getFLAbsoluteRotation2d().getDegrees());
       logCounter = 0;
     }
   }

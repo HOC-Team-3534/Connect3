@@ -2,7 +2,7 @@ package frc.robot.sequences;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.DRIVE;
+import frc.robot.Constants.Drive;
 import frc.robot.RobotContainer.Buttons;
 import frc.robot.subsystems.SwerveDriveState;
 import frc.statebasedcontroller.sequence.fundamental.phase.ISequencePhase;
@@ -39,7 +39,7 @@ public class DriveCharacterization extends BaseSequence<DriveCharacterizationPha
     public void process() {
         switch (getPhase()) {
             case DRIVE:
-                if (getTimeSinceStartOfPhase() > DRIVE.Config.DriveCharacterization.QUASIASTIC_DURATION * 1000
+                if (getTimeSinceStartOfPhase() > Drive.Config.DriveCharacterization.QUASIASTIC_DURATION * 1000
                     || Buttons.CancelCharacterize.getButton()) {
                     setNextPhase(DriveCharacterizationPhase.COMPLETED);
                 }

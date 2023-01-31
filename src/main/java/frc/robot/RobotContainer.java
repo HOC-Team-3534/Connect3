@@ -22,7 +22,8 @@ public class RobotContainer {
     final static XboxPlusPOV xbox2 = new XboxPlusPOV(1);
 
     /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
+     * The container for the robot. Contains subsystems, OI devices, and
+     * commands.
      */
     public RobotContainer() {
     }
@@ -62,11 +63,18 @@ public class RobotContainer {
         Characterize(() -> getController1().getAButton()),
         CancelCharacterize(() -> getController1().getBButton()),
         DTM(() -> getController1().getRightTriggerAxis() > 0.15),
-        CUBE(() -> getController2().getRightTriggerAxis() > 0.15), // Sets color to violet
-                                                                   // indicating cube to be picked
+        Cube(() -> getController2().getRightTriggerAxis() > 0.15), // Sets color
+                                                                   // to violet
+                                                                   // indicating
+                                                                   // cube to be
+                                                                   // picked
                                                                    // up
-        CONE(() -> getController2().getLeftTriggerAxis() > 0.15);// Sets color to yellow indicating
-                                                                 // cone to be picked up
+        Cone(() -> getController2().getLeftTriggerAxis() > 0.15), // Sets color
+                                                                  // to yellow
+                                                                  // indicating
+                                                                  // cone to be
+                                                                  // picked up
+        ResetGyro(() -> getController1().getRightStickButton());
 
         Callable<Boolean> callable;
 
