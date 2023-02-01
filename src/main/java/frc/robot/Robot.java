@@ -3,8 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
+import java.util.Arrays;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.sequences.SequenceProcessor;
@@ -14,8 +17,13 @@ import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Susan;
 import frc.robot.subsystems.SwerveDrive;
+import frc.statebasedcontroller.sequence.fundamental.phase.ISequencePhase;
+import frc.statebasedcontroller.sequence.fundamental.sequence.BaseAutonSequence;
 import frc.statebasedcontroller.subsystem.fundamental.subsystem.ISubsystem;
+import frc.pathplanner.PathPlannerFollower;
 import frc.robot.Constants.*;
+import frc.robot.autons.Auton;
+import frc.robot.autons.Path;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,7 +37,11 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   public static SequenceProcessor sequenceProcessor;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public static BaseAutonSequence<? extends ISequencePhase> chosenAuton;
+  public static PathPlannerFollower driveForward;
+  public static double designatedLoopPeriod = 20;
+  private static long autonStartTime;
+  private final SendableChooser<Auton> sendableChooser = new SendableChooser<>();
   public static SwerveDrive swerveDrive;
   public static Intake intake;
   public static Susan susan;
@@ -38,6 +50,8 @@ public class Robot extends TimedRobot {
   public static Blinkin state;
   private int loopCnt, loopPeriod, logCounter;
   private long prevLoopTime = 0;
+  public static boolean isAutonomous;
+  private final Field2d m_field = new Field2d();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -45,12 +59,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
     swerveDrive = new SwerveDrive();
     intake = new Intake();
     sequenceProcessor = new SequenceProcessor();
+    Arrays.asList(Path.values()).stream().forEach(path -> path.loadPath());
+    SmartDashboard.putNumber("Auton Time Delay(ms)", 0.0);
+    sendableChooser.setDefaultOption("Drive the Robot Forward",
+                                     Auton.Drive_Forward);
+    SmartDashboard.putData(sendableChooser);
+    SmartDashboard.putData("Field", m_field);
   }
 
   /**
@@ -63,6 +80,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    isAutonomous = this.isAutonomous();
   }
 
   /**
@@ -80,24 +98,29 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     swerveDrive.forceRelease();
     intake.forceRelease();
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    chosenAuton = sendableChooser.getSelected().getAuton();
+    chosenAuton.start();
+    autonStartTime = System.currentTimeMillis();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
+    log();
+    long currentTime = System.currentTimeMillis();
+    if (currentTime - prevLoopTime >= designatedLoopPeriod) {
+      loopPeriod = (int) (currentTime - prevLoopTime);
+      prevLoopTime = currentTime;
+      loopCnt++;
+      if (currentTime - autonStartTime > SmartDashboard.getNumber("Auton Time Delay(ms)",
+                                                                  0.0)) {
+        chosenAuton.process();
+      }
+      // run processes
+      /** Run subsystem process methods here */
+      swerveDrive.process();
     }
+    Timer.delay(0.001);
   }
 
   /** This function is called once when teleop is enabled. */
@@ -164,10 +187,7 @@ public class Robot extends TimedRobot {
     if (logCounter > 5) {
       SmartDashboard.putNumber("Gyro Heading from Drivetrain Model",
                                swerveDrive.getGyroRotation().getDegrees());
-      SmartDashboard.putNumber("CANCoder FL Rotation",
-                               swerveDrive.getDrivetrainModel().getModulePositions()[0].angle.getDegrees());
-      SmartDashboard.putNumber("CANCoder FL Absolute Position",
-                               swerveDrive.getFLAbsoluteRotation2d().getDegrees());
+      m_field.setRobotPose(swerveDrive.getPose());
       logCounter = 0;
     }
   }

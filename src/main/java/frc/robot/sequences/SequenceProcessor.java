@@ -1,5 +1,7 @@
 package frc.robot.sequences;
 
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+
 import frc.robot.Robot;
 import frc.robot.RobotContainer.Buttons;
 
@@ -21,8 +23,10 @@ public class SequenceProcessor {
     }
 
     public void process() {
-        if (Buttons.ResetGyro.getButton())
+        if (Buttons.ResetGyro.getButton()) {
             Robot.swerveDrive.resetGyro();
+            Robot.swerveDrive.resetPose();
+        }
         drive.start();
         // driveCharacterization.start();
         drive.process();

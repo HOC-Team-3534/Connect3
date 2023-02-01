@@ -22,6 +22,17 @@ public enum SwerveDriveState implements ISubsystemState<SwerveDrive> {
         if (s.getStateFirstRunThrough()) {
             s.printData();
         }
+    }),
+    DRIVE_AUTONOMOUSLY((s) -> {
+        if (s.getStateFirstRunThrough()) {
+            // TODO check if the start of the path is near current odometry for
+            // safety
+        }
+        if (s.getPathPlannerFollower() != null) {
+            s.setModuleStatesAutonomous();
+        } else {
+            System.out.println("DRIVE PATH NOT SET. MUST CREATE PATHPLANNERFOLLOWER IN AUTON AND SET IN SWERVEDRIVE SUBSYSTEM");
+        }
     });
 
     SubsystemState<SwerveDrive> state;

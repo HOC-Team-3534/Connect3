@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.SwerveHelper;
@@ -51,6 +52,10 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
         super(dt, Calculated.KINEMATICS, SwerveDriveState.NEUTRAL);
         resetGyro();
         // TODO Auto-generated constructor stub
+    }
+
+    public void resetPose() {
+        dt.setKnownPose(new Pose2d(0, 0, new Rotation2d()));
     }
 
     public Rotation2d getFLAbsoluteRotation2d() {
