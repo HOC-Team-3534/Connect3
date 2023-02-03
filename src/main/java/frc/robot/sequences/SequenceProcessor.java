@@ -9,7 +9,6 @@ public class SequenceProcessor {
     public static Drive drive;
     public static ElevatorSeq elevator;
     public static FlipperSeq flipper;
-    public static GyroReset gyroReset;
     public static SusanSeq susan;
     public static IntakeSeq intakeSeq;
     public static DriveCharacterization driveCharacterization;
@@ -24,7 +23,6 @@ public class SequenceProcessor {
 
     public void process() {
         if (Buttons.ResetGyro.getButton()) {
-            Robot.swerveDrive.resetGyro();
             Robot.swerveDrive.resetPose();
         }
         drive.start();
