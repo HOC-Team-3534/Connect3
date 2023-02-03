@@ -1,0 +1,13 @@
+diff a/src/main/java/frc/robot/subsystems/SwerveDrive.java b/src/main/java/frc/robot/subsystems/SwerveDrive.java	(rejected hunks)
+@@ -50,7 +50,11 @@
+  
+      public SwerveDrive() {
+          super(dt, Calculated.KINEMATICS, SwerveDriveState.NEUTRAL);
+++<<<<<<< Updated upstream
+ +                // TODO Auto-generated constructor stub
+++=======
++         // TODO Auto-generated constructor stub
+++>>>>>>> Stashed changes
+      }
+  
+      public void resetPose() {

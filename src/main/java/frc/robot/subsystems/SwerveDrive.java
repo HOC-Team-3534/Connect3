@@ -50,7 +50,7 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
 
     public SwerveDrive() {
         super(dt, Calculated.KINEMATICS, SwerveDriveState.NEUTRAL);
-                // TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     public void resetPose() {

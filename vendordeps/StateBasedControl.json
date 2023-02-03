@@ -1,7 +1,11 @@
 {
     "fileName": "StateBasedControl.json",
     "name": "statebasedcontrol",
+<<<<<<< Updated upstream
     "version": "2023.3.2",
+=======
+    "version": "2023.3.3",
+>>>>>>> Stashed changes
     "uuid": "f0571c82-3b3f-11ed-a261-0242ac120002",
     "mavenUrls": [
         "https://jitpack.io"
@@ -11,7 +15,11 @@
         {
             "groupId": "com.github.HOC-Team-3534",
             "artifactId": "StateBasedControl",
+<<<<<<< Updated upstream
             "version": "2023.3.2"
+=======
+            "version": "2023.3.3"
+>>>>>>> Stashed changes
         }
     ],
     "jniDependencies": [],
