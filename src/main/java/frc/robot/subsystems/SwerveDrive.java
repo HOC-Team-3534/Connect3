@@ -3,10 +3,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import frc.pathplanner.PathPlannerFollower;
+import frc.robot.Robot;
 import frc.robot.SwerveHelper;
 import frc.robot.Constants.Drive;
 import frc.robot.Constants.Drive.Calculated;
@@ -15,6 +19,8 @@ import frc.statebasedcontroller.subsystem.general.swervedrive.BaseDriveSubsystem
 import frc.statebasedcontroller.subsystem.general.swervedrive.swervelib.SwerveDrivetrainModel;
 import frc.statebasedcontroller.subsystem.general.swervedrive.swervelib.SwerveModule;
 import frc.robot.RobotContainer.Axes;
+import frc.robot.RobotContainer.Buttons;
+import frc.robot.extras.Limelight.GridPosition;
 
 public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
     final static boolean loadedConstants = SwerveHelper.loadSwerveConstants();
@@ -82,6 +88,22 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
             characterizeDriveInit();
         }
         characterizeDrive((double) getSequenceRequiring().getTimeSinceStartOfPhase() / 1000.0 * Drive.Config.DriveCharacterization.QUASIASTIC_VOLTAGE);
+    }
+
+    public void updatePoseWithVision() {
+        if (Robot.limelight.getBotPose() != null && !Buttons.DTM.getButton()) {
+            dt.setKnownPose(Robot.limelight.getBotPose());
+        }
+    }
+
+    public void followDTMPathToPose(Pose2d gridPosition) {
+        this.setPathPlannerFollower(generateOnTheFlyPath(gridPosition), false);
+    }
+
+    private PathPlannerFollower generateOnTheFlyPath(Pose2d gridPosition) {
+        PathPlannerTrajectory path = new PathPlannerTrajectory(getPose(),
+                                                               gridPosition,
+                                                               getSwerveModuleStates());
     }
 
     @Override

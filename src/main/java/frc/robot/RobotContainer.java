@@ -74,7 +74,8 @@ public class RobotContainer {
                                                                   // indicating
                                                                   // cone to be
                                                                   // picked up
-        ResetGyro(() -> getController1().getRightStickButton());
+        ResetGyro(() -> getController1().getRightStickButton()),
+        ResetWithLimelight(() -> getController1().getLeftStickButton());
 
         Callable<Boolean> callable;
 

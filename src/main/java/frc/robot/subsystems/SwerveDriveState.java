@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.extras.Limelight.GridPosition;
 import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 import frc.statebasedcontroller.subsystem.fundamental.state.SubsystemState;
 
@@ -32,6 +33,11 @@ public enum SwerveDriveState implements ISubsystemState<SwerveDrive> {
             s.setModuleStatesAutonomous();
         } else {
             System.out.println("DRIVE PATH NOT SET. MUST CREATE PATHPLANNERFOLLOWER IN AUTON AND SET IN SWERVEDRIVE SUBSYSTEM");
+        }
+    }),
+    DTM((s) -> {
+        var gridPosition = Robot.limelight.getGridPose(null);
+        if (GridPosition == null) {
         }
     });
 

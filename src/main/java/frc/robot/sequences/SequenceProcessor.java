@@ -25,6 +25,9 @@ public class SequenceProcessor {
         if (Buttons.ResetGyro.getButton()) {
             Robot.swerveDrive.resetPose();
         }
+        if (Buttons.ResetWithLimelight.getButton()) {
+            Robot.swerveDrive.updatePoseWithVision();
+        }
         drive.start();
         // if (Buttons.Characterize.getButton())
         // driveCharacterization.start();

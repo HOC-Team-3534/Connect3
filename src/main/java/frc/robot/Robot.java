@@ -61,7 +61,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    limelight = new Limelight();
+    limelight = new Limelight(null, null, null);
     swerveDrive = new SwerveDrive();
     intake = new Intake();
     sequenceProcessor = new SequenceProcessor();
@@ -192,7 +192,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Gyro Heading from Drivetrain Model",
                                swerveDrive.getGyroRotation().getDegrees());
       m_field.setRobotPose(swerveDrive.getPose());
-      LLPose_Field.setRobotPose(limelight.getBotPose());
+      if (limelight.getBotPose() != null)
+        LLPose_Field.setRobotPose(limelight.getBotPose());
       logCounter = 0;
     }
   }

@@ -3,24 +3,30 @@ package frc.robot.extras;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.function.Function;
 
-import javax.swing.TransferHandler.TransferSupport;
-
 public class Limelight {
+	public enum GridPosition {
+		Left,
+		Center,
+		Right
+	}
+
 	final Function<Double, Double> distanceFunction;
 	final Function<Double, Double> distanceToAverageShootVelocityFunction;
 	final Function<Double, Double> averageShootVelocityToDistanceFunction;
+	final Translation2d shiftAway = new Translation2d(	Units.inchesToMeters(14.0 + 2.0)	+ Constants.Drive.Known.WHEELBASE_METERS,
+														0);
+	final Translation2d shiftSideways = new Translation2d(0, Units.inchesToMeters(22.0));
 	NetworkTable table;
 	boolean isTargetAcquired;
 	double savedDistance = -999;
@@ -35,6 +41,7 @@ public class Limelight {
 	double aprilTagID;
 	long lastTimeTableSet = 0;
 	LimelightShootProjection limelightShootProjection;
+	HashMap<Integer, Translation2d> aprilTagPositions = new HashMap<>();
 
 	public Limelight(	Function<Double, Double> distanceFunction,
 						Function<Double, Double> distanceToAverageVelocityFunction,
@@ -43,13 +50,18 @@ public class Limelight {
 		this.distanceToAverageShootVelocityFunction = distanceToAverageVelocityFunction;
 		this.averageShootVelocityToDistanceFunction = averageShootVelocityToDistanceFunction;
 		getTable();
-	}
-
-	public Limelight() {
-		this.distanceFunction = null;
-		this.distanceToAverageShootVelocityFunction = null;
-		this.averageShootVelocityToDistanceFunction = null;
-		getTable();
+		aprilTagPositions.put(1, new Translation2d(	26.19,
+													272.776).times(0.0254));
+		aprilTagPositions.put(2, new Translation2d(	26.19,
+													206.776).times(0.0254));
+		aprilTagPositions.put(3, new Translation2d(	26.19,
+													140.776).times(0.0254));
+		aprilTagPositions.put(6, new Translation2d(	26.19,
+													174.185).times(0.0254));
+		aprilTagPositions.put(7, new Translation2d(	26.19,
+													108.185).times(0.0254));
+		aprilTagPositions.put(8, new Translation2d(	26.19,
+													42.185).times(0.0254));
 	}
 
 	public void getTable() {
@@ -66,13 +78,13 @@ public class Limelight {
 			case Blue:
 				if (!Arrays.asList(6, 7, 8).contains(getAprilTag()))
 					return null;
-				botPoseArray = (table.getEntry("<botpose_wpiblue>").getDoubleArray(new double[6]));
+				botPoseArray = (table.getEntry("botpose_wpiblue").getDoubleArray(new double[6]));
 				break;
 
 			case Red:
 				if (!Arrays.asList(1, 2, 3).contains(getAprilTag()))
 					return null;
-				botPoseArray = (table.getEntry("<botpose_wpired>").getDoubleArray(new double[6]));
+				botPoseArray = (table.getEntry("botpose_wpired").getDoubleArray(new double[6]));
 				break;
 
 			case Invalid:
@@ -90,14 +102,57 @@ public class Limelight {
 							Rotation2d.fromDegrees(botPoseArray[5]));
 	}
 
+	public Pose2d getGridPose(GridPosition position) {
+		if (!isValid())
+			return null;
+		if (getAprilTag() == 0)
+			return null;
+		Translation2d aprilTag;
+		switch (DriverStation.getAlliance()) {
+			case Blue:
+				if (!Arrays.asList(6, 7, 8).contains(getAprilTag()))
+					return null;
+				aprilTag = aprilTagPositions.get(getAprilTag());
+				break;
+
+			case Red:
+				if (!Arrays.asList(1, 2, 3).contains(getAprilTag()))
+					return null;
+				aprilTag = aprilTagPositions.get(getAprilTag());
+				break;
+
+			case Invalid:
+				return null;
+
+			default:
+				return null;
+		}
+		var robotCenter = aprilTag.plus(shiftAway);
+		switch (position) {
+			case Center:
+				break;
+
+			case Left:
+				robotCenter.plus(shiftSideways);
+				break;
+
+			case Right:
+				robotCenter.minus(shiftSideways);
+				break;
+
+			default:
+				break;
+		}
+	}
+
 	public double getLatency() {
 		getTable();
-		return table.getEntry("<tl>").getDouble(0);
+		return table.getEntry("tl").getDouble(0);
 	}
 
 	public int getAprilTag() {
 		getTable();
-		return (int) table.getEntry("<tid>").getInteger(0);
+		return (int) table.getEntry("tid").getInteger(0);
 	}
 
 	public Rotation2d getHorizontalAngleOffset() {
@@ -143,7 +198,7 @@ public class Limelight {
 			lastTimeTableSet = System.currentTimeMillis();
 			getTable();
 		}
-		return table.getEntry("tv").getDouble(0.0) == 1;
+		return table.getEntry("tv").getDouble(0.0) > 0;
 	}
 
 	public boolean isTargetAcquired() {
