@@ -26,6 +26,7 @@ public class SequenceProcessor {
             Robot.swerveDrive.resetPose();
         }
         drive.start();
+        // if (Buttons.Characterize.getButton())
         // driveCharacterization.start();
         drive.process();
         // driveCharacterization.process();
