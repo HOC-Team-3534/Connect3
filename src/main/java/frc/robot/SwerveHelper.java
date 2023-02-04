@@ -23,9 +23,9 @@ public class SwerveHelper {
                                                         2 * Math.PI,
                                                         Drive.Calculated.KINEMATICS,
                                                         newConfig, 0.1, 0.0,
-                                                        1.0 / 0.450, 1 / 0.012,
-                                                        0.25, 0.25, 1, 1, 0.25,
-                                                        0.25);
+                                                        0.43 / 12.0,
+                                                        0.012 / 12.0, 0.25,
+                                                        0.25, 1, 1, 0.25, 0.25);
         SwerveConstants.createSwerveConstants();
         return true;
     }
