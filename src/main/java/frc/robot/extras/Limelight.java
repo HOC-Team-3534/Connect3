@@ -5,18 +5,22 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Robot;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.function.Function;
 
 import javax.swing.TransferHandler.TransferSupport;
 
 public class Limelight {
-	Function<Double, Double> distanceFunction;
-	Function<Double, Double> distanceToAverageShootVelocityFunction;
-	Function<Double, Double> averageShootVelocityToDistanceFunction;
+	final Function<Double, Double> distanceFunction;
+	final Function<Double, Double> distanceToAverageShootVelocityFunction;
+	final Function<Double, Double> averageShootVelocityToDistanceFunction;
 	NetworkTable table;
 	boolean isTargetAcquired;
 	double savedDistance = -999;
@@ -41,16 +45,49 @@ public class Limelight {
 		getTable();
 	}
 
+	public Limelight() {
+		this.distanceFunction = null;
+		this.distanceToAverageShootVelocityFunction = null;
+		this.averageShootVelocityToDistanceFunction = null;
+		getTable();
+	}
+
 	public void getTable() {
 		table = NetworkTableInstance.getDefault().getTable("limelight");
 	}
 
 	public Pose2d getBotPose() {
-		if (isValid()) {
-			double[] x = (table.getEntry("<botpose>").getDoubleArray(new double[6]));
-			return new Pose2d(x[0], x[1], Rotation2d.fromDegrees(x[5]));
-		} else
+		if (!isValid())
 			return null;
+		if (getAprilTag() == 0)
+			return null;
+		double[] botPoseArray;
+		switch (DriverStation.getAlliance()) {
+			case Blue:
+				if (!Arrays.asList(6, 7, 8).contains(getAprilTag()))
+					return null;
+				botPoseArray = (table.getEntry("<botpose_wpiblue>").getDoubleArray(new double[6]));
+				break;
+
+			case Red:
+				if (!Arrays.asList(1, 2, 3).contains(getAprilTag()))
+					return null;
+				botPoseArray = (table.getEntry("<botpose_wpired>").getDoubleArray(new double[6]));
+				break;
+
+			case Invalid:
+				return null;
+
+			default:
+				return null;
+		}
+		/*
+		 * TODO Make sure you are mapping the right values in the array to the
+		 * right places and that you are negating the values
+		 * 
+		 */
+		return new Pose2d(	botPoseArray[0], botPoseArray[1],
+							Rotation2d.fromDegrees(botPoseArray[5]));
 	}
 
 	public double getLatency() {
@@ -58,9 +95,9 @@ public class Limelight {
 		return table.getEntry("<tl>").getDouble(0);
 	}
 
-	public double getAprilTag() {
+	public int getAprilTag() {
 		getTable();
-		return table.getEntry("<tid>").getDouble(0);
+		return (int) table.getEntry("<tid>").getInteger(0);
 	}
 
 	public Rotation2d getHorizontalAngleOffset() {

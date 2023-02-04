@@ -24,6 +24,7 @@ import frc.pathplanner.PathPlannerFollower;
 import frc.robot.Constants.*;
 import frc.robot.autons.Auton;
 import frc.robot.autons.Path;
+import frc.robot.extras.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -47,10 +48,12 @@ public class Robot extends TimedRobot {
   public static Flipper flipper;
   public static Elevator elevator;
   public static Blinkin state;
+  public static Limelight limelight;
   private int loopCnt, loopPeriod, logCounter;
   private long prevLoopTime = 0;
   public static boolean isAutonomous;
   private final Field2d m_field = new Field2d();
+  private final Field2d LLPose_Field = new Field2d();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -58,6 +61,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    limelight = new Limelight();
     swerveDrive = new SwerveDrive();
     intake = new Intake();
     sequenceProcessor = new SequenceProcessor();
@@ -67,6 +71,7 @@ public class Robot extends TimedRobot {
                                      Auton.Drive_Forward);
     SmartDashboard.putData(sendableChooser);
     SmartDashboard.putData("Field", m_field);
+    SmartDashboard.putData("LL Pose Field", LLPose_Field);
   }
 
   /**
@@ -187,6 +192,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Gyro Heading from Drivetrain Model",
                                swerveDrive.getGyroRotation().getDegrees());
       m_field.setRobotPose(swerveDrive.getPose());
+      LLPose_Field.setRobotPose(limelight.getBotPose());
       logCounter = 0;
     }
   }
