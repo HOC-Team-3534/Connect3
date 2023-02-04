@@ -38,7 +38,6 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   public static SequenceProcessor sequenceProcessor;
   public static BaseAutonSequence<? extends ISequencePhase> chosenAuton;
-  public static PathPlannerFollower driveForward;
   public static double designatedLoopPeriod = 20;
   private static long autonStartTime;
   private final SendableChooser<Auton> sendableChooser = new SendableChooser<>();
