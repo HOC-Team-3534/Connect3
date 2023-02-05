@@ -1,5 +1,7 @@
 package frc.robot.sequences;
 
+import frc.robot.Robot;
+import frc.robot.RobotContainer.Buttons;
 import frc.robot.subsystems.SwerveDriveState;
 import frc.statebasedcontroller.sequence.fundamental.phase.ISequencePhase;
 import frc.statebasedcontroller.sequence.fundamental.phase.SequencePhase;
@@ -8,7 +10,9 @@ import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 
 enum DrivePhase implements ISequencePhase {
     NEUTRAL,
-    DRIVE(SwerveDriveState.DRIVE);
+    DRIVE(SwerveDriveState.DRIVE),
+    DTM(SwerveDriveState.DTM),
+    DTM_Complete(SwerveDriveState.DRIVE);
 
     SequencePhase phase;
 
@@ -30,7 +34,32 @@ public class Drive extends BaseSequence<DrivePhase> {
 
     @Override
     public void process() {
-        // TODO Auto-generated method stub
+        switch (getPhase()) {
+            case DRIVE:
+                if (Buttons.DTM.getButton())
+                    break;
+            case DTM:
+                if (Robot.swerveDrive.getPathPlannerFollower().isFinished()) {
+                    setNextPhase(DrivePhase.DTM_Complete);
+                }
+                if (!Buttons.DTM.getButton()) {
+                    setNextPhase(DrivePhase.DRIVE);
+                }
+                break;
+
+            case DTM_Complete:
+                if (!Buttons.DTM.getButton()) {
+                    setNextPhase(DrivePhase.DRIVE);
+                }
+                break;
+
+            case NEUTRAL:
+                break;
+
+            default:
+                break;
+        }
+        updatePhase();
     }
 
     @Override

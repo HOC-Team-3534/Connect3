@@ -4,7 +4,6 @@ import java.util.function.Consumer;
 
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.extras.Limelight.GridPosition;
 import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 import frc.statebasedcontroller.subsystem.fundamental.state.SubsystemState;
 
@@ -36,8 +35,13 @@ public enum SwerveDriveState implements ISubsystemState<SwerveDrive> {
         }
     }),
     DTM((s) -> {
-        var gridPosition = Robot.limelight.getGridPose(null);
-        if (GridPosition == null) {
+        var gridPosition = Robot.limelight.getGridPose(RobotContainer.getGridPositionRequest());
+        if (gridPosition == null) {
+            DRIVE.getState().process();
+        } else {
+            if (s.getStateFirstRunThrough())
+                s.generatePathToEndPoseOnTheFly(gridPosition);
+            s.setModuleStatesAutonomous();
         }
     });
 

@@ -9,18 +9,13 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.RobotContainer.GridPosition;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.Function;
 
 public class Limelight {
-	public enum GridPosition {
-		Left,
-		Center,
-		Right
-	}
-
 	final Function<Double, Double> distanceFunction;
 	final Function<Double, Double> distanceToAverageShootVelocityFunction;
 	final Function<Double, Double> averageShootVelocityToDistanceFunction;
@@ -143,6 +138,7 @@ public class Limelight {
 			default:
 				break;
 		}
+		return new Pose2d(robotCenter, new Rotation2d(Math.PI));
 	}
 
 	public double getLatency() {

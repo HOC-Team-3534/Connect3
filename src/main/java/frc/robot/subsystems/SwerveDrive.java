@@ -13,6 +13,7 @@ import frc.pathplanner.PathPlannerFollower;
 import frc.robot.Robot;
 import frc.robot.SwerveHelper;
 import frc.robot.Constants.Drive;
+import frc.robot.Constants.Drive.AUTO;
 import frc.robot.Constants.Drive.Calculated;
 import frc.robot.Constants.Drive.Config;
 import frc.statebasedcontroller.subsystem.general.swervedrive.BaseDriveSubsystem;
@@ -20,7 +21,6 @@ import frc.statebasedcontroller.subsystem.general.swervedrive.swervelib.SwerveDr
 import frc.statebasedcontroller.subsystem.general.swervedrive.swervelib.SwerveModule;
 import frc.robot.RobotContainer.Axes;
 import frc.robot.RobotContainer.Buttons;
-import frc.robot.extras.Limelight.GridPosition;
 
 public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
     final static boolean loadedConstants = SwerveHelper.loadSwerveConstants();
@@ -96,14 +96,19 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
         }
     }
 
-    public void followDTMPathToPose(Pose2d gridPosition) {
-        this.setPathPlannerFollower(generateOnTheFlyPath(gridPosition), false);
+    public void generatePathToEndPoseOnTheFly(Pose2d gridPosition) {
+        this.setPathPlannerFollower(new PathPlannerFollower(getPose(),
+                                                            getSpeed(),
+                                                            gridPosition,
+                                                            gridPosition.getRotation(),
+                                                            0.0,
+                                                            AUTO.kMaxSpeedMetersPerSecond,
+                                                            AUTO.kMaxAccelerationMetersPerSecondSquared),
+                                    false);
     }
 
-    private PathPlannerFollower generateOnTheFlyPath(Pose2d gridPosition) {
-        PathPlannerTrajectory path = new PathPlannerTrajectory(getPose(),
-                                                               gridPosition,
-                                                               getSwerveModuleStates());
+    public ChassisSpeeds getSpeed() {
+        return Drive.Calculated.KINEMATICS.toChassisSpeeds(getSwerveModuleStates());
     }
 
     @Override

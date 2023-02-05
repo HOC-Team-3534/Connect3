@@ -1,6 +1,5 @@
 package frc.robot.autons;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.pathplanner.PathPlannerFollower;
 import frc.robot.Constants.Drive.AUTO;
 

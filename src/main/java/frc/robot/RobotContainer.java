@@ -75,7 +75,9 @@ public class RobotContainer {
                                                                   // cone to be
                                                                   // picked up
         ResetGyro(() -> getController1().getRightStickButton()),
-        ResetWithLimelight(() -> getController1().getLeftStickButton());
+        ResetWithLimelight(() -> getController1().getLeftStickButton()),
+        GridLeft(() -> getController1().getLeftTriggerAxis() > 0.15),
+        GridRight(() -> getController1().getRightTriggerAxis() > 0.15);
 
         Callable<Boolean> callable;
 
@@ -109,6 +111,26 @@ public class RobotContainer {
             } catch (Exception ex) {
                 return 0.0;
             }
+        }
+    }
+
+    public enum GridPosition {
+        Left,
+        Center,
+        Right
+    }
+
+    public static GridPosition getGridPositionRequest() {
+        var left = Buttons.GridLeft.getButton();
+        var right = Buttons.GridRight.getButton();
+        if (left && right) {
+            return GridPosition.Center;
+        } else if (left) {
+            return GridPosition.Left;
+        } else if (right) {
+            return GridPosition.Right;
+        } else {
+            return GridPosition.Center;
         }
     }
 }
