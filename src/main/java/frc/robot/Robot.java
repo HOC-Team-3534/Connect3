@@ -22,6 +22,7 @@ import frc.statebasedcontroller.sequence.fundamental.sequence.BaseAutonSequence;
 import frc.statebasedcontroller.subsystem.fundamental.subsystem.ISubsystem;
 import frc.pathplanner.PathPlannerFollower;
 import frc.robot.Constants.*;
+import frc.robot.RobotContainer.Buttons;
 import frc.robot.autons.Auton;
 import frc.robot.autons.Path;
 import frc.robot.extras.Limelight;
@@ -103,7 +104,7 @@ public class Robot extends TimedRobot {
     swerveDrive.forceRelease();
     intake.forceRelease();
     chosenAuton = sendableChooser.getSelected().getAuton();
-    chosenAuton.start();
+    // chosenAuton.start();
     autonStartTime = System.currentTimeMillis();
   }
 
@@ -192,8 +193,14 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Gyro Heading from Drivetrain Model",
                                swerveDrive.getGyroRotation().getDegrees());
       m_field.setRobotPose(swerveDrive.getPose());
-      if (limelight.getBotPose() != null)
-        LLPose_Field.setRobotPose(limelight.getBotPose());
+      var pose = limelight.getGridPose(swerveDrive.getGridPositionRequest());
+      if (pose != null)
+        // LLPose_Field.setRobotPose(pose);
+        if (swerveDrive.getPathPlannerFollower() != null) {
+          if (swerveDrive.getPathPlannerFollower().getRemainingTimeSeconds() <= 0)
+            swerveDrive.getPathPlannerFollower().resetStart();
+          LLPose_Field.setRobotPose(swerveDrive.getPathPlannerFollower().getCurrentState().poseMeters);
+        }
       logCounter = 0;
     }
   }

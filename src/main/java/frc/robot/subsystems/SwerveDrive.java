@@ -96,7 +96,7 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
         }
     }
 
-    public void generatePathToEndPoseOnTheFly(Pose2d gridPosition) {
+    public void generatePathToGridPose(Pose2d gridPosition) {
         this.setPathPlannerFollower(new PathPlannerFollower(getPose(),
                                                             getSpeed(),
                                                             gridPosition,
@@ -109,6 +109,26 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
 
     public ChassisSpeeds getSpeed() {
         return Drive.Calculated.KINEMATICS.toChassisSpeeds(getSwerveModuleStates());
+    }
+
+    public enum GridPosition {
+        Left,
+        Center,
+        Right
+    }
+
+    public GridPosition getGridPositionRequest() {
+        var left = Buttons.GridLeft.getButton();
+        var right = Buttons.GridRight.getButton();
+        if (left && right) {
+            return GridPosition.Center;
+        } else if (left) {
+            return GridPosition.Left;
+        } else if (right) {
+            return GridPosition.Right;
+        } else {
+            return GridPosition.Center;
+        }
     }
 
     @Override

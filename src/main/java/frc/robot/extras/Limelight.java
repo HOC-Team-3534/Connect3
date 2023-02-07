@@ -9,7 +9,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.RobotContainer.GridPosition;
+import frc.robot.subsystems.SwerveDrive.GridPosition;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -94,7 +94,7 @@ public class Limelight {
 		 * 
 		 */
 		return new Pose2d(	botPoseArray[0], botPoseArray[1],
-							Rotation2d.fromDegrees(botPoseArray[5]));
+							Rotation2d.fromDegrees(botPoseArray[5] + 180));
 	}
 
 	public Pose2d getGridPose(GridPosition position) {
@@ -123,22 +123,24 @@ public class Limelight {
 				return null;
 		}
 		var robotCenter = aprilTag.plus(shiftAway);
+		if (getBotPose().getTranslation().getDistance(robotCenter) > 1.5)
+			return null;
 		switch (position) {
 			case Center:
 				break;
 
 			case Left:
-				robotCenter.plus(shiftSideways);
+				robotCenter = robotCenter.plus(shiftSideways);
 				break;
 
 			case Right:
-				robotCenter.minus(shiftSideways);
+				robotCenter = robotCenter.minus(shiftSideways);
 				break;
 
 			default:
 				break;
 		}
-		return new Pose2d(robotCenter, new Rotation2d(Math.PI));
+		return new Pose2d(robotCenter, new Rotation2d());
 	}
 
 	public double getLatency() {

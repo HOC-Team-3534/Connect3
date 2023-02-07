@@ -34,16 +34,7 @@ public enum SwerveDriveState implements ISubsystemState<SwerveDrive> {
             System.out.println("DRIVE PATH NOT SET. MUST CREATE PATHPLANNERFOLLOWER IN AUTON AND SET IN SWERVEDRIVE SUBSYSTEM");
         }
     }),
-    DTM((s) -> {
-        var gridPosition = Robot.limelight.getGridPose(RobotContainer.getGridPositionRequest());
-        if (gridPosition == null) {
-            DRIVE.getState().process();
-        } else {
-            if (s.getStateFirstRunThrough())
-                s.generatePathToEndPoseOnTheFly(gridPosition);
-            s.setModuleStatesAutonomous();
-        }
-    });
+    DTM((s) -> s.setModuleStatesAutonomous());
 
     SubsystemState<SwerveDrive> state;
 
