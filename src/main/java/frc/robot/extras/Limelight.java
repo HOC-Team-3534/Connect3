@@ -19,7 +19,7 @@ public class Limelight {
 	final Function<Double, Double> distanceFunction;
 	final Function<Double, Double> distanceToAverageShootVelocityFunction;
 	final Function<Double, Double> averageShootVelocityToDistanceFunction;
-	final Translation2d shiftAway = new Translation2d(	Units.inchesToMeters(14.0 + 2.0)	+ Constants.Drive.Known.WHEELBASE_METERS,
+	final Translation2d shiftAway = new Translation2d(	Units.inchesToMeters(14.0 + 6.0)	+ Constants.Drive.Known.WHEELBASE_METERS,
 														0);
 	final Translation2d shiftSideways = new Translation2d(0, Units.inchesToMeters(22.0));
 	NetworkTable table;

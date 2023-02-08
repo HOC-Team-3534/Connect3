@@ -41,7 +41,8 @@ public class Drive extends BaseSequence<DrivePhase> {
                     var gridPosition = Robot.limelight.getGridPose(Robot.swerveDrive.getGridPositionRequest());
                     if (gridPosition != null) {
                         Robot.swerveDrive.generatePathToGridPose(gridPosition);
-                        // setNextPhase(DrivePhase.DTM);
+                        Robot.swerveDrive.getPathPlannerFollower().resetStart();
+                        setNextPhase(DrivePhase.DTM);
                     }
                 }
                 break;

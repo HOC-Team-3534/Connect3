@@ -5,6 +5,7 @@ package frc.robot;
 
 import java.util.Arrays;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -199,7 +200,9 @@ public class Robot extends TimedRobot {
         if (swerveDrive.getPathPlannerFollower() != null) {
           if (swerveDrive.getPathPlannerFollower().getRemainingTimeSeconds() <= 0)
             swerveDrive.getPathPlannerFollower().resetStart();
-          LLPose_Field.setRobotPose(swerveDrive.getPathPlannerFollower().getCurrentState().poseMeters);
+          var currState = swerveDrive.getPathPlannerFollower().getCurrentState();
+          LLPose_Field.setRobotPose(new Pose2d(currState.poseMeters.getTranslation(),
+                                               currState.holonomicRotation));
         }
       logCounter = 0;
     }
