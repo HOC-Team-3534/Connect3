@@ -123,7 +123,7 @@ public class Limelight {
 				return null;
 		}
 		var robotCenter = aprilTag.plus(shiftAway);
-		if (getBotPose().getTranslation().getDistance(robotCenter) > 1.5)
+		if (getBotPose().getTranslation().getDistance(robotCenter) > 2.5)
 			return null;
 		switch (position) {
 			case Center:

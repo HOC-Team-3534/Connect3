@@ -100,7 +100,7 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
         this.setPathPlannerFollower(new PathPlannerFollower(getPose(),
                                                             getSpeed(),
                                                             gridPosition,
-                                                            gridPosition.getRotation(),
+                                                            gridPosition.getRotation().plus(Rotation2d.fromDegrees(180)),
                                                             0.0,
                                                             AUTO.kMaxSpeedMetersPerSecond,
                                                             AUTO.kMaxAccelerationMetersPerSecondSquared),
