@@ -23,15 +23,17 @@ public class SequenceProcessor {
 
     public void process() {
         if (Buttons.ResetGyro.getButton()) {
-            Robot.swerveDrive.resetPose();
+            // Robot.swerveDrive.resetPose();
         }
         if (Buttons.ResetWithLimelight.getButton()) {
-            Robot.swerveDrive.updatePoseWithVision();
+            // Robot.swerveDrive.updatePoseWithVision();
         }
-        drive.start();
+        // drive.start();
+        intakeSeq.start();
         // if (Buttons.Characterize.getButton())
         // driveCharacterization.start();
-        drive.process();
+        // drive.process();
+        intakeSeq.process();
         // driveCharacterization.process();
     }
 }

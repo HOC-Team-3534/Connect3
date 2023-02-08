@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     limelight = new Limelight(null, null, null);
-    swerveDrive = new SwerveDrive();
+    // swerveDrive = new SwerveDrive();
     intake = new Intake();
     sequenceProcessor = new SequenceProcessor();
     Arrays.asList(Path.values()).stream().forEach(path -> path.loadPath());
@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    swerveDrive.forceRelease();
+    // swerveDrive.forceRelease();
     intake.forceRelease();
     chosenAuton = sendableChooser.getSelected().getAuton();
     // chosenAuton.start();
@@ -123,7 +123,7 @@ public class Robot extends TimedRobot {
       }
       // run processes
       /** Run subsystem process methods here */
-      swerveDrive.process();
+      // swerveDrive.process();
     }
     Timer.delay(0.001);
   }
@@ -131,7 +131,7 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    swerveDrive.forceRelease();
+    // swerveDrive.forceRelease();
     intake.forceRelease();
   }
 
@@ -147,8 +147,8 @@ public class Robot extends TimedRobot {
       sequenceProcessor.process();
       // run processes
       /** Run subsystem process methods here */
-      swerveDrive.process();
-      // intake.process();
+      // swerveDrive.process();
+      intake.process();
     }
     Timer.delay(0.001);
   }
@@ -156,7 +156,7 @@ public class Robot extends TimedRobot {
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {
-    swerveDrive.forceRelease();
+    // swerveDrive.forceRelease();
     intake.forceRelease();
   }
 
@@ -164,7 +164,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     log();
-    swerveDrive.process();
+    // swerveDrive.process();
+    intake.process();
   }
 
   /** This function is called once when test mode is enabled. */
@@ -188,20 +189,20 @@ public class Robot extends TimedRobot {
   }
 
   private void log() {
-    logCounter++;
-    if (logCounter > 5) {
-      SmartDashboard.putNumber("Gyro Heading from Drivetrain Model",
-                               swerveDrive.getGyroRotation().getDegrees());
-      m_field.setRobotPose(swerveDrive.getPose());
-      var pose = limelight.getGridPose(swerveDrive.getGridPositionRequest());
-      if (pose != null)
-        // LLPose_Field.setRobotPose(pose);
-        if (swerveDrive.getPathPlannerFollower() != null) {
-          if (swerveDrive.getPathPlannerFollower().getRemainingTimeSeconds() <= 0)
-            swerveDrive.getPathPlannerFollower().resetStart();
-          LLPose_Field.setRobotPose(swerveDrive.getPathPlannerFollower().getCurrentState().poseMeters);
-        }
-      logCounter = 0;
-    }
+    // logCounter++;
+    // if (logCounter > 5) {
+    // SmartDashboard.putNumber("Gyro Heading from Drivetrain Model",
+    // swerveDrive.getGyroRotation().getDegrees());
+    // m_field.setRobotPose(swerveDrive.getPose());
+    // var pose = limelight.getGridPose(swerveDrive.getGridPositionRequest());
+    // if (pose != null)
+    // // LLPose_Field.setRobotPose(pose);
+    // if (swerveDrive.getPathPlannerFollower() != null) {
+    // if (swerveDrive.getPathPlannerFollower().getRemainingTimeSeconds() <= 0)
+    // swerveDrive.getPathPlannerFollower().resetStart();
+    // LLPose_Field.setRobotPose(swerveDrive.getPathPlannerFollower().getCurrentState().poseMeters);
+    // }
+    // logCounter = 0;
+    // }
   }
 }

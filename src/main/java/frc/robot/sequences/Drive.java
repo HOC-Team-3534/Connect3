@@ -35,39 +35,36 @@ public class Drive extends BaseSequence<DrivePhase> {
 
     @Override
     public void process() {
-        switch (getPhase()) {
-            case DRIVE:
-                if (Buttons.DTM.getButton()) {
-                    var gridPosition = Robot.limelight.getGridPose(Robot.swerveDrive.getGridPositionRequest());
-                    if (gridPosition != null) {
-                        Robot.swerveDrive.generatePathToGridPose(gridPosition);
-                        // setNextPhase(DrivePhase.DTM);
-                    }
-                }
-                break;
-
-            case DTM:
-                if (Robot.swerveDrive.getPathPlannerFollower().isFinished()) {
-                    setNextPhase(DrivePhase.DTM_Complete);
-                }
-                if (!Buttons.DTM.getButton()) {
-                    setNextPhase(DrivePhase.DRIVE);
-                }
-                break;
-
-            case DTM_Complete:
-                if (!Buttons.DTM.getButton()) {
-                    setNextPhase(DrivePhase.DRIVE);
-                }
-                break;
-
-            case NEUTRAL:
-                break;
-
-            default:
-                break;
-        }
-        updatePhase();
+        // switch (getPhase()) {
+        // case DRIVE:
+        // if (Buttons.DTM.getButton()) {
+        // var gridPosition =
+        // Robot.limelight.getGridPose(Robot.swerveDrive.getGridPositionRequest());
+        // if (gridPosition != null) {
+        // Robot.swerveDrive.generatePathToGridPose(gridPosition);
+        // // setNextPhase(DrivePhase.DTM);
+        // }
+        // }
+        // break;
+        // case DTM:
+        // if (Robot.swerveDrive.getPathPlannerFollower().isFinished()) {
+        // setNextPhase(DrivePhase.DTM_Complete);
+        // }
+        // if (!Buttons.DTM.getButton()) {
+        // setNextPhase(DrivePhase.DRIVE);
+        // }
+        // break;
+        // case DTM_Complete:
+        // if (!Buttons.DTM.getButton()) {
+        // setNextPhase(DrivePhase.DRIVE);
+        // }
+        // break;
+        // case NEUTRAL:
+        // break;
+        // default:
+        // break;
+        // }
+        // updatePhase();
     }
 
     @Override

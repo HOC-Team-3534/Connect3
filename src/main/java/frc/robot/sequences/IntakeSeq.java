@@ -1,5 +1,8 @@
 package frc.robot.sequences;
 
+import javax.lang.model.util.ElementScanner14;
+
+import frc.robot.RobotContainer.Buttons;
 import frc.robot.subsystems.IntakeState;
 import frc.statebasedcontroller.sequence.fundamental.phase.ISequencePhase;
 import frc.statebasedcontroller.sequence.fundamental.phase.SequencePhase;
@@ -31,7 +34,13 @@ public class IntakeSeq extends BaseSequence<IntakeSeqPhase> {
 
     @Override
     public void process() {
-        // TODO Auto-generated method stub
+        if (Buttons.Intake.getButton())
+            setNextPhase(IntakeSeqPhase.INTAKE);
+        else if (Buttons.Extake.getButton())
+            setNextPhase(IntakeSeqPhase.EXTAKE);
+        else
+            setNextPhase(IntakeSeqPhase.NEUTRAL);
+        updatePhase();
     }
 
     @Override
