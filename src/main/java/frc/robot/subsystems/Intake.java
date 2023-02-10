@@ -10,32 +10,32 @@ import frc.statebasedcontroller.subsystem.fundamental.subsystem.BaseSubsystem;
 //We are using 2 Talon SR's one for the top and one for the bottom bar
 
 public class Intake extends BaseSubsystem<IntakeState> {
-    final static WPI_TalonFX topMotor = new WPI_TalonFX(9);
-    // WPI_TalonSRX botMotor;
+    final static WPI_TalonFX botMotor = new WPI_TalonFX(9);
+    //  final static WPI_TalonFX topMotor = new WPI_TalonFX(10);
 
     public Intake() {
         super(IntakeState.NEUTRAL);
         // topMotor.setInverted(true);
-        SmartDashboard.putNumber("intake percent power", 0.5);
+        SmartDashboard.putNumber("intake percent power", 1.0);
         // TODO Auto-generated constructor stub
     }
 
     public void intake() {
-        var power = SmartDashboard.getNumber("intake percent power", 0);
-        topMotor.set(ControlMode.PercentOutput, power);
-        // botMotor.set(ControlMode.PercentOutput, 0.75);
+        var power = SmartDashboard.getNumber("intake percent power", 1.0);
+        botMotor.set(ControlMode.PercentOutput, power);
+        // topMotor.set(ControlMode.PercentOutput, power);
     }
 
     public void extake() {
-        var power = SmartDashboard.getNumber("intake percent power", 0);
-        topMotor.set(ControlMode.PercentOutput, -power);
-        // botMotor.set(ControlMode.PercentOutput, -0.75);
+        var power = SmartDashboard.getNumber("intake percent power", 1.0);
+        botMotor.set(ControlMode.PercentOutput, -power);
+        // topMotor.set(ControlMode.PercentOutput, -power);
     }
 
     @Override
     public void neutral() {
-        topMotor.set(ControlMode.PercentOutput, 0.0);
-        // botMotor.set(ControlMode.PercentOutput, 0.0);
+        botMotor.set(ControlMode.PercentOutput, 0.0);
+        // topMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
     @Override
