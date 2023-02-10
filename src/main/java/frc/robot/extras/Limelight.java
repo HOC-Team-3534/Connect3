@@ -45,17 +45,17 @@ public class Limelight {
 		this.distanceToAverageShootVelocityFunction = distanceToAverageVelocityFunction;
 		this.averageShootVelocityToDistanceFunction = averageShootVelocityToDistanceFunction;
 		getTable();
-		aprilTagPositions.put(1, new Translation2d(	26.19,
+		aprilTagPositions.put(1, new Translation2d(	39.88,
 													272.776).times(0.0254));
-		aprilTagPositions.put(2, new Translation2d(	26.19,
+		aprilTagPositions.put(2, new Translation2d(	39.88,
 													206.776).times(0.0254));
-		aprilTagPositions.put(3, new Translation2d(	26.19,
+		aprilTagPositions.put(3, new Translation2d(	39.88,
 													140.776).times(0.0254));
-		aprilTagPositions.put(6, new Translation2d(	26.19,
+		aprilTagPositions.put(6, new Translation2d(	39.88,
 													174.185).times(0.0254));
-		aprilTagPositions.put(7, new Translation2d(	26.19,
+		aprilTagPositions.put(7, new Translation2d(	39.88,
 													108.185).times(0.0254));
-		aprilTagPositions.put(8, new Translation2d(	26.19,
+		aprilTagPositions.put(8, new Translation2d(	39.88,
 													42.185).times(0.0254));
 	}
 
@@ -94,7 +94,7 @@ public class Limelight {
 		 * 
 		 */
 		return new Pose2d(	botPoseArray[0], botPoseArray[1],
-							Rotation2d.fromDegrees(botPoseArray[5] + 180));
+							Rotation2d.fromDegrees(botPoseArray[5]));
 	}
 
 	public Pose2d getGridPose(GridPosition position) {
