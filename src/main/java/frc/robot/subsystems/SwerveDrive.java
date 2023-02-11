@@ -6,6 +6,7 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -53,10 +54,21 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
                                                                       bl, br,
                                                                       pigeon2);
     static PIDController limelightPID = new PIDController(0.185, 0.0, 0.0);
+    static SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(2.5);
+    static SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(2.5);
+    static SlewRateLimiter slewRateLimiterRotation = new SlewRateLimiter(2.5);
 
     public SwerveDrive() {
         super(dt, Calculated.KINEMATICS, SwerveDriveState.NEUTRAL);
         // TODO Auto-generated constructor stub
+    }
+
+    public void process() {
+        // var botPose = Robot.limelight.getBotPose();
+        // if (botPose != null)
+        //     dt.updateOdometryWithVision(botPose,
+        //                                 Robot.limelight.getLatency() / 1000.0);
+        super.process();
     }
 
     public void resetPose() {
@@ -68,15 +80,17 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
     }
 
     protected void drive() {
-        setModuleStates(Axes.Drive_ForwardBackward.getAxis(),
-                        Axes.Drive_LeftRight.getAxis(),
-                        Axes.Drive_Rotation.getAxis(), false);
+        setModuleStates(slewRateLimiterX.calculate(Axes.Drive_ForwardBackward.getAxis()),
+                        slewRateLimiterY.calculate(Axes.Drive_LeftRight.getAxis()),
+                        slewRateLimiterRotation.calculate(Axes.Drive_Rotation.getAxis()),
+                        false);
     }
 
     protected void creep() {
-        setModuleStatesCreep(Axes.Drive_ForwardBackward.getAxis(),
-                             Axes.Drive_LeftRight.getAxis(),
-                             Axes.Drive_Rotation.getAxis(), false);
+        setModuleStatesCreep(slewRateLimiterX.calculate(Axes.Drive_ForwardBackward.getAxis()),
+                             slewRateLimiterY.calculate(Axes.Drive_LeftRight.getAxis()),
+                             slewRateLimiterRotation.calculate(Axes.Drive_Rotation.getAxis()),
+                             false);
     }
 
     public SwerveDrivetrainModel getDrivetrainModel() {
@@ -100,7 +114,7 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
         this.setPathPlannerFollower(new PathPlannerFollower(getPose(),
                                                             getSpeed(),
                                                             gridPosition,
-                                                            gridPosition.getRotation().plus(Rotation2d.fromDegrees(180)),
+                                                            gridPosition.getTranslation().minus(getPose().getTranslation()).getAngle(),
                                                             0.0,
                                                             AUTO.kMaxSpeedMetersPerSecond,
                                                             AUTO.kMaxAccelerationMetersPerSecondSquared),

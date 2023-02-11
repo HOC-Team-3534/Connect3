@@ -196,14 +196,14 @@ public class Robot extends TimedRobot {
       m_field.setRobotPose(swerveDrive.getPose());
       var pose = limelight.getGridPose(swerveDrive.getGridPositionRequest());
       if (pose != null)
-        // LLPose_Field.setRobotPose(pose);
-        if (swerveDrive.getPathPlannerFollower() != null) {
-          if (swerveDrive.getPathPlannerFollower().getRemainingTimeSeconds() <= 0)
-            swerveDrive.getPathPlannerFollower().resetStart();
-          var currState = swerveDrive.getPathPlannerFollower().getCurrentState();
-          LLPose_Field.setRobotPose(new Pose2d(currState.poseMeters.getTranslation(),
-                                               currState.holonomicRotation));
-        }
+        LLPose_Field.setRobotPose(pose);
+        //if (swerveDrive.getPathPlannerFollower() != null) {
+          //if (swerveDrive.getPathPlannerFollower().getRemainingTimeSeconds() <= 0)
+            //swerveDrive.getPathPlannerFollower().resetStart();
+          //var currState = swerveDrive.getPathPlannerFollower().getCurrentState();
+          //LLPose_Field.setRobotPose(new Pose2d(currState.poseMeters.getTranslation(),
+                                              // currState.holonomicRotation));
+        //}
       logCounter = 0;
     }
   }

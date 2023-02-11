@@ -143,9 +143,15 @@ public class Limelight {
 		return new Pose2d(robotCenter, new Rotation2d());
 	}
 
+	/**
+	 * Get value from limelight network tables and added 20 milliseconds for
+	 * correction
+	 * 
+	 * @return Latency in milliseconds
+	 */
 	public double getLatency() {
 		getTable();
-		return table.getEntry("tl").getDouble(0);
+		return table.getEntry("tl").getDouble(0) + 20.0;
 	}
 
 	public int getAprilTag() {

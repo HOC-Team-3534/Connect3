@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.Drive;
 import frc.statebasedcontroller.subsystem.general.swervedrive.swervelib.SDSModuleConfiguration;
@@ -28,6 +29,7 @@ public class SwerveHelper {
                                                         0.0379 / 12.0, 10.0,
                                                         10.0, 1, 1, 0.25, 0.25);
         SwerveConstants.createSwerveConstants();
+        SwerveConstants.visionPoseEstAngleStdDev = Rotation2d.fromDegrees(0.25);
         return true;
     }
 }
