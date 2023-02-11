@@ -1,15 +1,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.statebasedcontroller.subsystem.fundamental.subsystem.BaseSubsystem;
-// Intake on the front with the swerve drive treds on the wood bot
-//We are using 2 Talon SR's one for the top and one for the bottom bar
 
 public class Intake extends BaseSubsystem<IntakeState> {
-    WPI_TalonSRX topMotor;
-    WPI_TalonSRX botMotor;
+    WPI_TalonSRX topMotor = new WPI_TalonSRX(15);
+    WPI_TalonFX botMotor = new WPI_TalonFX(16);
 
     public Intake() {
         super(IntakeState.NEUTRAL);
@@ -17,13 +16,13 @@ public class Intake extends BaseSubsystem<IntakeState> {
     }
 
     public void intake() {
-        topMotor.set(ControlMode.PercentOutput, 0.75);
-        botMotor.set(ControlMode.PercentOutput, 0.75);
+        topMotor.set(ControlMode.PercentOutput, 1.0);
+        botMotor.set(ControlMode.PercentOutput, 1.0);
     }
 
     public void extake() {
-        topMotor.set(ControlMode.PercentOutput, -0.75);
-        botMotor.set(ControlMode.PercentOutput, -0.75);
+        topMotor.set(ControlMode.PercentOutput, -1.0);
+        botMotor.set(ControlMode.PercentOutput, -1.0);
     }
 
     @Override

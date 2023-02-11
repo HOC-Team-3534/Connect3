@@ -63,13 +63,13 @@ public class RobotContainer {
         Characterize(() -> getController1().getAButton()),
         CancelCharacterize(() -> getController1().getBButton()),
         DTM(() -> getController1().getLeftTriggerAxis() > 0.15),
-        Cube(() -> getController2().getBButton()), // Sets color
+        CubeLights(() -> getController2().getBButton()), // Sets color
                                                                    // to violet
                                                                    // indicating
                                                                    // cube to be
                                                                    // picked
                                                                    // up
-        Cone(() -> getController2().getXButton()), // Sets color
+        ConeLights(() -> getController2().getXButton()), // Sets color
                                                                   // to yellow
                                                                   // indicating
                                                                   // cone to be
