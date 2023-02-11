@@ -6,28 +6,28 @@ import frc.robot.Robot;
 import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 import frc.statebasedcontroller.subsystem.fundamental.state.SubsystemState;
 
-public enum FlipperState implements ISubsystemState<Flipper> {
+public enum CarriageState implements ISubsystemState<Carriage> {
     NEUTRAL((s)-> s.neutral()),
     FLIP((s)-> s.flip()),
     UNFLIP((s)-> s.unflip());
 
 
-    SubsystemState<Flipper> state;
+    SubsystemState<Carriage> state;
 
-	FlipperState(Consumer<Flipper> processFunction) {
+	CarriageState(Consumer<Carriage> processFunction) {
 		this.state = new SubsystemState<>(this, processFunction);
 	}
 
     @Override
-    public SubsystemState<Flipper> getState() {
+    public SubsystemState<Carriage> getState() {
         // TODO Auto-generated method stub
         return state;
     }
 
     @Override
-    public Flipper getSubsystem() {
+    public Carriage getSubsystem() {
         // TODO Auto-generated method stub
-        return Robot.flipper;
+        return Robot.carriage;
     }
     
 }

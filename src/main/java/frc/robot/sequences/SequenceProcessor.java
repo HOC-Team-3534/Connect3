@@ -8,8 +8,7 @@ import frc.robot.RobotContainer.Buttons;
 public class SequenceProcessor {
     public static Drive drive;
     public static ElevatorSeq elevator;
-    public static FlipperSeq flipper;
-    public static SusanSeq susan;
+    public static CarriageSeq carriage;
     public static IntakeSeq intakeSeq;
     public static DriveCharacterization driveCharacterization;
 
@@ -22,7 +21,7 @@ public class SequenceProcessor {
     }
 
     public void process() {
-        if (Buttons.ResetGyro.getButton()) {
+        if (Buttons.ResetPoseToZero.getButton()) {
             Robot.swerveDrive.resetPose();
         }
         if (Buttons.ResetWithLimelight.getButton()) {

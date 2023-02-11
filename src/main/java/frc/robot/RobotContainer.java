@@ -57,24 +57,24 @@ public class RobotContainer {
     }
 
     public enum Buttons {
-        Creep(() -> getController1().getLeftTriggerAxis() > 0.15),
+        Creep(() -> getController1().getRightTriggerAxis() > 0.15),
         Intake(() -> getController1().getRightBumper()),
         Extake(() -> getController1().getLeftBumper()), // Subject to Change
         Characterize(() -> getController1().getAButton()),
         CancelCharacterize(() -> getController1().getBButton()),
-        DTM(() -> getController1().getRightTriggerAxis() > 0.15),
-        Cube(() -> getController2().getRightTriggerAxis() > 0.15), // Sets color
+        DTM(() -> getController1().getLeftTriggerAxis() > 0.15),
+        Cube(() -> getController2().getBButton()), // Sets color
                                                                    // to violet
                                                                    // indicating
                                                                    // cube to be
                                                                    // picked
                                                                    // up
-        Cone(() -> getController2().getLeftTriggerAxis() > 0.15), // Sets color
+        Cone(() -> getController2().getXButton()), // Sets color
                                                                   // to yellow
                                                                   // indicating
                                                                   // cone to be
                                                                   // picked up
-        ResetGyro(() -> getController1().getRightStickButton()),
+        ResetPoseToZero(() -> getController1().getRightStickButton()),
         ResetWithLimelight(() -> getController1().getLeftStickButton()),
         GridLeft(() -> getController2().getLeftBumper()),
         GridRight(() -> getController2().getRightBumper());

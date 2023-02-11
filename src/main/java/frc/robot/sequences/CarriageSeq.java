@@ -2,17 +2,16 @@ package frc.robot.sequences;
 
 import frc.statebasedcontroller.sequence.fundamental.phase.ISequencePhase;
 import frc.statebasedcontroller.sequence.fundamental.phase.SequencePhase;
-//Probably using a Talon SR and PLG
+//Probably using a Talon SR and a PLG 
 import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 
-enum SusanSeqPhase implements ISequencePhase {
+enum FlipperSeqPhase implements ISequencePhase {
     NEUTRAL,
-    ROTATE;// something to tell the subsystem and we might need to change it to clockwise
-           // and counterclockwise
+    FLIP;
 
     SequencePhase phase;
 
-    SusanSeqPhase(ISubsystemState... states) {
+    FlipperSeqPhase(ISubsystemState... states) {
         phase = new SequencePhase(states);
     }
 
@@ -22,5 +21,5 @@ enum SusanSeqPhase implements ISequencePhase {
     }
 }
 
-public class SusanSeq {
+public class CarriageSeq {
 }

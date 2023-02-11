@@ -3,9 +3,9 @@ package frc.robot.subsystems;
 import frc.statebasedcontroller.subsystem.fundamental.subsystem.BaseSubsystem;
 
 // The clamp to grab the game element and place it on the grid
-public class Flipper extends BaseSubsystem<FlipperState>{
+public class Carriage extends BaseSubsystem<CarriageState>{
 
-    public Flipper(FlipperState neutralState) {
+    public Carriage(CarriageState neutralState) {
         super(neutralState);
         //TODO Auto-generated constructor stub
     }
