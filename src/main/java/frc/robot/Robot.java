@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.sequences.SequenceProcessor;
-import frc.robot.subsystems.Blinkin;
+import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.LightsState;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Carriage;
 import frc.robot.subsystems.Intake;
@@ -47,7 +48,7 @@ public class Robot extends TimedRobot {
   public static Intake intake;
   public static Carriage carriage;
   public static Elevator elevator;
-  public static Blinkin state;
+  public static Lights lights;
   public static Limelight limelight;
   private int loopCnt, loopPeriod, logCounter;
   private long prevLoopTime = 0;
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
     limelight = new Limelight(null, null, null);
     swerveDrive = new SwerveDrive();
     intake = new Intake();
+    lights = new Lights();
     sequenceProcessor = new SequenceProcessor();
     Arrays.asList(Path.values()).stream().forEach(path -> path.loadPath());
     SmartDashboard.putNumber("Auton Time Delay(ms)", 0.0);
@@ -102,6 +104,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     swerveDrive.forceRelease();
     intake.forceRelease();
+    lights.forceRelease();
     chosenAuton = sendableChooser.getSelected().getAuton();
     // chosenAuton.start();
     autonStartTime = System.currentTimeMillis();
@@ -132,6 +135,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     swerveDrive.forceRelease();
     intake.forceRelease();
+    lights.forceRelease();
   }
 
   /** This function is called periodically during operator control. */
@@ -144,6 +148,7 @@ public class Robot extends TimedRobot {
       prevLoopTime = currentTime;
       loopCnt++;
       sequenceProcessor.process();
+      lights.process();
       // run processes
       /** Run subsystem process methods here */
       swerveDrive.process();
@@ -157,6 +162,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     swerveDrive.forceRelease();
     intake.forceRelease();
+    lights.forceRelease();
   }
 
   /** This function is called periodically when disabled. */
@@ -164,6 +170,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     log();
     swerveDrive.process();
+    lights.process();
   }
 
   /** This function is called once when test mode is enabled. */
@@ -195,13 +202,15 @@ public class Robot extends TimedRobot {
       var pose = limelight.getGridPose(swerveDrive.getGridPositionRequest());
       if (pose != null)
         LLPose_Field.setRobotPose(pose);
-        //if (swerveDrive.getPathPlannerFollower() != null) {
-          //if (swerveDrive.getPathPlannerFollower().getRemainingTimeSeconds() <= 0)
-            //swerveDrive.getPathPlannerFollower().resetStart();
-          //var currState = swerveDrive.getPathPlannerFollower().getCurrentState();
-          //LLPose_Field.setRobotPose(new Pose2d(currState.poseMeters.getTranslation(),
-                                              // currState.holonomicRotation));
-        //}
+      // if (swerveDrive.getPathPlannerFollower() != null) {
+      // if (swerveDrive.getPathPlannerFollower().getRemainingTimeSeconds() <=
+      // 0)
+      // swerveDrive.getPathPlannerFollower().resetStart();
+      // var currState = swerveDrive.getPathPlannerFollower().getCurrentState();
+      // LLPose_Field.setRobotPose(new
+      // Pose2d(currState.poseMeters.getTranslation(),
+      // currState.holonomicRotation));
+      // }
       logCounter = 0;
     }
   }

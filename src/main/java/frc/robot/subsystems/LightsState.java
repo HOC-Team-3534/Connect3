@@ -6,28 +6,26 @@ import frc.robot.Robot;
 import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 import frc.statebasedcontroller.subsystem.fundamental.state.SubsystemState;
 
-public enum BlinkinState implements ISubsystemState<Blinkin> {
+public enum LightsState implements ISubsystemState<Lights> {
     NEUTRAL((s) -> s.neutral()),
-    CONE((s) -> s.cone()),
-    CUBE((s) -> s.cube()),
-    DTM((s) -> s.DTM()),
-    REDALLIANCE((s) -> s.redAlliance()),
-    BLUEAllIANCE((s) -> s.blueAlliance());
+    CONE((s) -> s.yellow()),
+    CUBE((s) -> s.purple()),
+    DTM((s) -> s.green());
 
-    SubsystemState<Blinkin> state;
+    SubsystemState<Lights> state;
 
-    BlinkinState(Consumer<Blinkin> processFunction) {
+    LightsState(Consumer<Lights> processFunction) {
         this.state = new SubsystemState<>(this, processFunction);
     }
 
-    public SubsystemState<Blinkin> getState() {
+    public SubsystemState<Lights> getState() {
         // TODO Auto-generated method stub
         return state;
     }
 
     @Override
-    public Blinkin getSubsystem() {
+    public Lights getSubsystem() {
         // TODO Auto-generated method stub
-        return Robot.state;
+        return Robot.lights;
     }
 }

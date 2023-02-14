@@ -7,10 +7,10 @@ import frc.robot.RobotContainer.Buttons;
 
 public class SequenceProcessor {
     public static Drive drive;
-    public static ElevatorSeq elevator;
-    public static CarriageSeq carriage;
     public static IntakeSeq intakeSeq;
     public static DriveCharacterization driveCharacterization;
+    public static GetAttention getAttention;
+    public static PlacePiece placePiece;
 
     public SequenceProcessor() {
         drive = new Drive(DrivePhase.NEUTRAL, DrivePhase.DRIVE);
@@ -18,6 +18,10 @@ public class SequenceProcessor {
                                   IntakeSeqPhase.NEUTRAL);
         driveCharacterization = new DriveCharacterization(DriveCharacterizationPhase.NEUTRAL,
                                                           DriveCharacterizationPhase.DRIVE);
+        getAttention = new GetAttention(GetAttentionPhase.NEUTRAL,
+                                        GetAttentionPhase.NEUTRAL);
+        placePiece = new PlacePiece(PlacePiecePhase.NEUTRAL,
+                                    PlacePiecePhase.DECIDE);
     }
 
     public void process() {
@@ -27,10 +31,16 @@ public class SequenceProcessor {
         if (Buttons.ResetWithLimelight.getButton()) {
             Robot.swerveDrive.updatePoseWithVision();
         }
+        if (Buttons.DTM.getButton()) {
+            placePiece.start();
+        }
+        getAttention.start();
         drive.start();
         // if (Buttons.Characterize.getButton())
         // driveCharacterization.start();
         drive.process();
+        getAttention.process();
+        placePiece.process();
         // driveCharacterization.process();
     }
 }

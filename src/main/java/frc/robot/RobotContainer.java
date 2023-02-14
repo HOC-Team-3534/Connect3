@@ -64,20 +64,22 @@ public class RobotContainer {
         CancelCharacterize(() -> getController1().getBButton()),
         DTM(() -> getController1().getLeftTriggerAxis() > 0.15),
         CubeLights(() -> getController2().getBButton()), // Sets color
-                                                                   // to violet
-                                                                   // indicating
-                                                                   // cube to be
-                                                                   // picked
-                                                                   // up
+                                                         // to violet
+                                                         // indicating
+                                                         // cube to be
+                                                         // picked
+                                                         // up
         ConeLights(() -> getController2().getXButton()), // Sets color
-                                                                  // to yellow
-                                                                  // indicating
-                                                                  // cone to be
-                                                                  // picked up
+                                                         // to yellow
+                                                         // indicating
+                                                         // cone to be
+                                                         // picked up
         ResetPoseToZero(() -> getController1().getRightStickButton()),
         ResetWithLimelight(() -> getController1().getLeftStickButton()),
         GridLeft(() -> getController2().getLeftBumper()),
-        GridRight(() -> getController2().getRightBumper());
+        GridRight(() -> getController2().getRightBumper()),
+        PlaceMid(() -> getController2().getAButton()),
+        PlaceHigh(() -> getController2().getYButton());
 
         Callable<Boolean> callable;
 

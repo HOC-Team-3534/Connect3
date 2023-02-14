@@ -7,16 +7,17 @@ import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 import frc.statebasedcontroller.subsystem.fundamental.state.SubsystemState;
 
 public enum CarriageState implements ISubsystemState<Carriage> {
-    NEUTRAL((s)-> s.neutral()),
-    FLIP((s)-> s.flip()),
-    UNFLIP((s)-> s.unflip());
-
+    NEUTRAL((s) -> s.neutral()),
+    DROP((s) -> {
+    }),
+    RETRACT((s) -> {
+    });
 
     SubsystemState<Carriage> state;
 
-	CarriageState(Consumer<Carriage> processFunction) {
-		this.state = new SubsystemState<>(this, processFunction);
-	}
+    CarriageState(Consumer<Carriage> processFunction) {
+        this.state = new SubsystemState<>(this, processFunction);
+    }
 
     @Override
     public SubsystemState<Carriage> getState() {
@@ -29,5 +30,4 @@ public enum CarriageState implements ISubsystemState<Carriage> {
         // TODO Auto-generated method stub
         return Robot.carriage;
     }
-    
 }

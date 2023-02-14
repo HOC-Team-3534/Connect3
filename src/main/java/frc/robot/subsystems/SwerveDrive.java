@@ -66,8 +66,8 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
     public void process() {
         // var botPose = Robot.limelight.getBotPose();
         // if (botPose != null)
-        //     dt.updateOdometryWithVision(botPose,
-        //                                 Robot.limelight.getLatency() / 1000.0);
+        // dt.updateOdometryWithVision(botPose,
+        // Robot.limelight.getLatency() / 1000.0);
         super.process();
     }
 
@@ -119,6 +119,11 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
                                                             AUTO.kMaxSpeedMetersPerSecond,
                                                             AUTO.kMaxAccelerationMetersPerSecondSquared),
                                     false);
+    }
+
+    public boolean isAtEndPose() {
+        return false;// TODO Make function return if you are relatively close to
+                     // the end position in DTM
     }
 
     public ChassisSpeeds getSpeed() {
