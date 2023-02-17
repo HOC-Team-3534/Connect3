@@ -8,6 +8,8 @@ import frc.statebasedcontroller.subsystem.fundamental.state.SubsystemState;
 
 public enum CarriageState implements ISubsystemState<Carriage> {
     NEUTRAL((s) -> s.neutral()),
+    FLIP((s) -> s.flipElement()),
+    Clamp((s) -> s.clampElement()),
     DROP((s) -> {
     }),
     RETRACT((s) -> {

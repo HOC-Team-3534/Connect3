@@ -79,7 +79,9 @@ public class RobotContainer {
         GridLeft(() -> getController2().getLeftBumper()),
         GridRight(() -> getController2().getRightBumper()),
         PlaceMid(() -> getController2().getAButton()),
-        PlaceHigh(() -> getController2().getYButton());
+        PlaceHigh(() -> getController2().getYButton()),
+        ClampElement(() -> getController2().getRightTriggerAxis() > 0.15),
+        FlipElement(() -> getController2().getLeftTriggerAxis() > 0.15);
 
         Callable<Boolean> callable;
 

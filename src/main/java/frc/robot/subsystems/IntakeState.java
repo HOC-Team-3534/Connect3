@@ -9,7 +9,8 @@ import frc.statebasedcontroller.subsystem.fundamental.state.SubsystemState;
 public enum IntakeState implements ISubsystemState<Intake> {
     NEUTRAL((s) -> s.neutral()),
     INTAKE((s) -> s.intake()),
-    EXTAKE((s) -> s.extake());
+    EXTAKE((s) -> s.extake()),
+    RUNBOTTOM((s) -> s.runBottomMotor());
 
     SubsystemState<Intake> state;
 

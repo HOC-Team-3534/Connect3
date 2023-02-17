@@ -93,6 +93,12 @@ public class SwerveDrive extends BaseDriveSubsystem<SwerveDriveState> {
                              false);
     }
 
+    public void alignForChargeStation() {
+        setModuleStatesDesiredAngle(slewRateLimiterX.calculate(Axes.Drive_ForwardBackward.getAxis()),
+                                    slewRateLimiterY.calculate(Axes.Drive_LeftRight.getAxis()),
+                                    new Rotation2d(), true);
+    }
+
     public SwerveDrivetrainModel getDrivetrainModel() {
         return dt;
     }

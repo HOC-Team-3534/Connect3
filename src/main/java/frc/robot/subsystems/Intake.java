@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.statebasedcontroller.subsystem.fundamental.subsystem.BaseSubsystem;
 
 public class Intake extends BaseSubsystem<IntakeState> {
-    WPI_TalonSRX topMotor = new WPI_TalonSRX(15);
+    WPI_TalonFX topMotor = new WPI_TalonFX(15);
     WPI_TalonFX botMotor = new WPI_TalonFX(16);
 
     public Intake() {
@@ -23,6 +23,10 @@ public class Intake extends BaseSubsystem<IntakeState> {
     public void extake() {
         topMotor.set(ControlMode.PercentOutput, -1.0);
         botMotor.set(ControlMode.PercentOutput, -1.0);
+    }
+
+    public void runBottomMotor() {
+        botMotor.set(ControlMode.PercentOutput, 1.0);
     }
 
     @Override

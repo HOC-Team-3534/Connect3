@@ -1,21 +1,22 @@
 package frc.robot.sequences;
 
 import frc.robot.RobotContainer.Buttons;
+import frc.robot.subsystems.CarriageState;
 import frc.robot.subsystems.IntakeState;
 import frc.statebasedcontroller.sequence.fundamental.phase.ISequencePhase;
 import frc.statebasedcontroller.sequence.fundamental.phase.SequencePhase;
 import frc.statebasedcontroller.sequence.fundamental.sequence.BaseSequence;
 import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 
-enum IntakeSeqPhase implements ISequencePhase {
-    NEUTRAL(IntakeState.NEUTRAL),
-    INTAKE(IntakeState.INTAKE),
-    EXTAKE(IntakeState.EXTAKE),
-    RUNBOTTOM(IntakeState.RUNBOTTOM);
+enum FlipSeqPhase implements ISequencePhase {
+    NEUTRAL(IntakeState.NEUTRAL, CarriageState.NEUTRAL),
+    FLIP(IntakeState.RUNBOTTOM, CarriageState.FLIP);// TODO Probably need a to
+                                                    // add a delay inbetween the
+                                                    // two running
 
     SequencePhase phase;
 
-    IntakeSeqPhase(ISubsystemState... states) {
+    FlipSeqPhase(ISubsystemState... states) {
         phase = new SequencePhase(states);
     }
 
@@ -25,20 +26,18 @@ enum IntakeSeqPhase implements ISequencePhase {
     }
 }
 
-public class IntakeSeq extends BaseSequence<IntakeSeqPhase> {
-    public IntakeSeq(IntakeSeqPhase neutralPhase, IntakeSeqPhase startPhase) {
+public class FlipSeq extends BaseSequence<FlipSeqPhase> {
+    public FlipSeq(FlipSeqPhase neutralPhase, FlipSeqPhase startPhase) {
         super(neutralPhase, startPhase);
         // TODO Auto-generated constructor stub
     }
 
     @Override
     public void process() {
-        if (Buttons.Intake.getButton())
-            setNextPhase(IntakeSeqPhase.INTAKE);
-        else if (Buttons.Extake.getButton())
-            setNextPhase(IntakeSeqPhase.EXTAKE);
+        if (Buttons.FlipElement.getButton())
+            setNextPhase(FlipSeqPhase.FLIP);
         else
-            setNextPhase(IntakeSeqPhase.NEUTRAL);
+            setNextPhase(FlipSeqPhase.NEUTRAL);
         updatePhase();
     }
 
