@@ -12,10 +12,10 @@ import frc.statebasedcontroller.sequence.fundamental.sequence.BaseSequence;
 import frc.statebasedcontroller.subsystem.fundamental.state.ISubsystemState;
 
 enum PlacePiecePhase implements ISequencePhase {
-    NEUTRAL(ElevatorState.NEUTRAL, CarriageState.NEUTRAL),
-    DECIDE(ElevatorState.NEUTRAL, CarriageState.NEUTRAL),
-    MID(ElevatorState.MID, CarriageState.NEUTRAL),
-    HIGH(ElevatorState.HIGH, CarriageState.NEUTRAL),
+    NEUTRAL,
+    DECIDE,
+    MID(ElevatorState.MID),
+    HIGH(ElevatorState.HIGH),
     DROP(ElevatorState.STAY, CarriageState.DROP),
     RETRACT(ElevatorState.LOW, CarriageState.RETRACT);
 

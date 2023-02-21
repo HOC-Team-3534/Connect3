@@ -12,7 +12,15 @@ import frc.statebasedcontroller.sequence.fundamental.sequence.BaseAutonSequence;
 public enum Auton {
     Drive_Forward(new DriveForward(DriveForwardPhase.Neutral,
                                    DriveForwardPhase.Drive, Robot.swerveDrive),
-                  Path.Drive_Forward_1);
+                  Path.Drive_Forward_1),
+    Far_Left_Place2(new FarLeftPlace2(FarLeftPlace2Phase.NEUTRAL,
+                                      FarLeftPlace2Phase.PLACECONE,
+                                      Robot.swerveDrive),
+                    Path.Far_Left_Place_2),
+    Far_Right_Place2(new FarRightPlace2(FarRightPlace2Phase.NEUTRAL,
+                                        FarRightPlace2Phase.PLACECONE,
+                                        Robot.swerveDrive),
+                     Path.Far_Right_Place_2);
 
     BaseAutonSequence<? extends ISequencePhase> auton;
     List<Path> paths;

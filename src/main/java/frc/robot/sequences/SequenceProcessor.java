@@ -22,6 +22,7 @@ public class SequenceProcessor {
                                         GetAttentionPhase.NEUTRAL);
         placePiece = new PlacePiece(PlacePiecePhase.NEUTRAL,
                                     PlacePiecePhase.DECIDE);
+                            
     }
 
     public void process() {
