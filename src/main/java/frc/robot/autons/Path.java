@@ -4,7 +4,9 @@ import frc.pathplanner.PathPlannerFollower;
 import frc.robot.Constants.Drive.AUTO;
 
 public enum Path {
-    Drive_Forward_1("Drive Forward Path");
+    Drive_Forward_1("Drive Forward Path"),
+    Far_Right_Place_2("Far Right Place 2"),
+    Far_Left_Place_2("Far Left Place 2");
 
     String pathName;
     PathPlannerFollower path;

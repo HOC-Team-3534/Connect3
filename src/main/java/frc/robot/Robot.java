@@ -44,6 +44,8 @@ public class Robot extends TimedRobot {
   public static double designatedLoopPeriod = 20;
   private static long autonStartTime;
   private final SendableChooser<Auton> sendableChooser = new SendableChooser<>();
+  public static PathPlannerFollower farLeftPlace2;
+  public static PathPlannerFollower farRightPlace2;
   public static SwerveDrive swerveDrive;
   public static Intake intake;
   public static Carriage carriage;
@@ -70,7 +72,10 @@ public class Robot extends TimedRobot {
     Arrays.asList(Path.values()).stream().forEach(path -> path.loadPath());
     SmartDashboard.putNumber("Auton Time Delay(ms)", 0.0);
     sendableChooser.setDefaultOption("Drive the Robot Forward",
-                                     Auton.Drive_Forward);
+                                     Auton.Drive_Forward);// TODO change this an
+                                                          // official auton
+    sendableChooser.addOption("Far Left Place Cube then Cone",
+                              Auton.Far_Left_Place2);
     SmartDashboard.putData(sendableChooser);
     SmartDashboard.putData("Field", m_field);
     SmartDashboard.putData("LL Pose Field", LLPose_Field);
@@ -102,12 +107,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    swerveDrive.forceRelease();
-    intake.forceRelease();
-    lights.forceRelease();
-    chosenAuton = sendableChooser.getSelected().getAuton();
+    // swerveDrive.forceRelease();
+    // intake.forceRelease();
+    // lights.forceRelease();
+    // chosenAuton = sendableChooser.getSelected().getAuton();
     // chosenAuton.start();
-    autonStartTime = System.currentTimeMillis();
+    // autonStartTime = System.currentTimeMillis();
+    elevator.forceRelease();
   }
 
   /** This function is called periodically during autonomous. */
@@ -125,7 +131,7 @@ public class Robot extends TimedRobot {
       }
       // run processes
       /** Run subsystem process methods here */
-      swerveDrive.process();
+      //swerveDrive.process();
     }
     Timer.delay(0.001);
   }
@@ -133,9 +139,10 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    swerveDrive.forceRelease();
-    intake.forceRelease();
-    lights.forceRelease();
+    // swerveDrive.forceRelease();
+    // intake.forceRelease();
+    // lights.forceRelease();
+    elevator.forceRelease();
   }
 
   /** This function is called periodically during operator control. */
@@ -148,11 +155,12 @@ public class Robot extends TimedRobot {
       prevLoopTime = currentTime;
       loopCnt++;
       sequenceProcessor.process();
-      lights.process();
+      // lights.process();
       // run processes
       /** Run subsystem process methods here */
-      swerveDrive.process();
+      // swerveDrive.process();
       // intake.process();
+      elevator.process();
     }
     Timer.delay(0.001);
   }
@@ -160,17 +168,19 @@ public class Robot extends TimedRobot {
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {
-    swerveDrive.forceRelease();
-    intake.forceRelease();
-    lights.forceRelease();
+    // swerveDrive.forceRelease();
+    // intake.forceRelease();
+    // lights.forceRelease();
+    elevator.forceRelease();
   }
 
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
     log();
-    swerveDrive.process();
-    lights.process();
+   // swerveDrive.process();
+    //lights.process();
+
   }
 
   /** This function is called once when test mode is enabled. */
