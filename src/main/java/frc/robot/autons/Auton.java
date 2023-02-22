@@ -20,7 +20,11 @@ public enum Auton {
     Far_Right_Place2(new FarRightPlace2(FarRightPlace2Phase.NEUTRAL,
                                         FarRightPlace2Phase.PLACECONE,
                                         Robot.swerveDrive),
-                     Path.Far_Right_Place_2);
+                     Path.Far_Right_Place_2),
+    Far_Left_Place2_Pick_Up(new FarLeftPlace2PickUp(FarLeftPlace2PickUpPhase.NEUTRAL,
+                                                    FarLeftPlace2PickUpPhase.PLACECONE,
+                                                    Robot.swerveDrive),
+                            Path.Far_Left_Place_2_Pick_Up);
 
     BaseAutonSequence<? extends ISequencePhase> auton;
     List<Path> paths;

@@ -16,19 +16,27 @@ public class Carriage extends BaseSubsystem<CarriageState> {
     }
 
     public void clampElement() {
-        clamp.set(ControlMode.PercentOutput, 0.5);// TODO find the output needed
-                                                  // to correctly run most
-                                                  // likely will use encoder
-                                                  // counts
+        clamp.set(ControlMode.PercentOutput, 0.5);// TODO figure out how this
+                                                  // works because unsure of its
+                                                  // by encoder counts or by
+                                                  // output
     }
 
     public void flipElement() {
-        flipper.set(ControlMode.PercentOutput, 0.5);// TODO find the output
-                                                    // needed to correctly run
-                                                    // most likely will use
-                                                    // encoder counts they want
-                                                    // it to be around 90
-                                                    // degrees flipping
+        flipper.set(ControlMode.Position, 1024);// TODO find the output
+                                                // needed to correctly run
+                                                // most likely will use
+                                                // encoder counts they want
+                                                // it to be around 90
+                                                // degrees flipping Thats why
+                                                // its at 1024 which is 1/4 of
+                                                // 4096
+    }
+
+    public void drop() {
+        flipper.set(ControlMode.Position, 1024);// TODO this is 1/4 of 4096
+                                                // don't know if it will work
+                                                // need to test should
     }
 
     @Override

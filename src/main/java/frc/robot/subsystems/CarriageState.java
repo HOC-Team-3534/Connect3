@@ -10,8 +10,7 @@ public enum CarriageState implements ISubsystemState<Carriage> {
     NEUTRAL((s) -> s.neutral()),
     FLIP((s) -> s.flipElement()),
     CLAMP((s) -> s.clampElement()),
-    DROP((s) -> {
-    }),
+    DROP((s) -> s.drop()),
     RETRACT((s) -> {
     });
 
